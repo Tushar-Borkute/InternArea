@@ -1,0 +1,196 @@
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: linear-gradient(135deg, #003d82 0%, #00528c 100%);
+  padding: 20px 80px 24px 80px;
+  gap: 60px;
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.home-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.home-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-self: self-start;
+}
+
+.home-header h1 {
+  font-size: 48px;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.highlight {
+  color: #ffa500;
+  font-weight: 700;
+}
+
+.home-subtitle {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-weight: 400;
+}
+
+.signup-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 32px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 500px;
+}
+
+.signup-card h3 {
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  margin: 0;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.signup-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 200px;
+}
+
+.google-btn {
+  background: white;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.google-btn:hover {
+  background: #f5f5f5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.mail-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.mail-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.agreement-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.agreement-text a {
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.agreement-text a:hover {
+  opacity: 0.8;
+}
+
+.employer-section {
+  margin-top: none;
+  
+  align-self: self-start;
+}
+
+.employer-link {
+  font-size: 16px;
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.3s ease;
+}
+
+.employer-link:hover {
+  opacity: 0.8;
+}
+
+.employer-link span {
+  font-size: 20px;
+}
+
+.home-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.home-right img {
+  width: 95%;
+  max-width: 700px;
+  height:fit-content;
+}
+
+.home-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+
+@media (max-width: 1024px) {
+  .home-container {
+    flex-direction: column;
+    padding: 40px;
+    gap: 40px;
+  }
+
+  .home-header h1 {
+    font-size: 36px;
+  }
+
+  .home-subtitle {
+    font-size: 16px;
+  }
+
+  .buttons-container {
+    flex-direction: column;
+  }
+
+  .signup-btn {
+    width: 100%;
+  }
+
+  
+}
