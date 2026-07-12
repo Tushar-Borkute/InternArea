@@ -1,14 +1,16 @@
-import NavBar from "./components/navBar";
-import Home from "./components/home";
-import TrustedCompanies from "./components/TrustedCompanies";
-import Jobs from "./components/Jobs";
+import { Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home/Home";
+import Job from "./Pages/Jobs/Job";
+import Internship from "./Pages/Internship/Internship";
+
 function App() {
   return (
     <div className="App">
-      <NavBar />
-      <Home />
-      <TrustedCompanies />
-      <Jobs />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/Job" element={<Job />} />
+        <Route path="/Internship" element={<Internship/>}/>
+      </Routes>
     </div>
   );
 }

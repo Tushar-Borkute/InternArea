@@ -1,8 +1,9 @@
+import { Filter, MapPin, IndianRupee } from "lucide-react";
 import { useState } from "react";
-import { MapPin, Calendar, IndianRupee } from "lucide-react";
-import "./Jobs.css";
+import "./Internship.css";
+import NavBar from "../../components/navBar";
 
-const Jobs = () => {
+const Job = () => {
   const categories = [
     "Big brands",
     "Work from Home",
@@ -14,6 +15,15 @@ const Jobs = () => {
     "Data Science",
   ];
 
+  const locations = [
+    "Bangalore",
+    "Hyderabad",
+    "Remote",
+    "Mumbai",
+    "Chennai",
+    "Pune",
+    "Delhi",
+  ];
   const jobs = [
     // ========================= JOBS =========================
 
@@ -387,141 +397,242 @@ const Jobs = () => {
       domain: "internship",
     },
   ];
-  const [jobSelectedCategory, setJobSelectedCategory] = useState("Big brands");
-  const [internshipSelectedCategory, setInternshipSelectedCategory] =useState("Big brands");
-  const filteredJobs = jobs.filter(
-    (job) => job.category === jobSelectedCategory && job.domain === "job",
+
+  const [checked, setChecked] = useState(false); //work from home checkbox
+  const [pchecked, setPchecked] = useState(false); // part time checkbox
+  const [salary, setSalary] = useState(0);
+  const [search, setSearch] = useState(""); //profile search
+  const [lsearch, setLsearch] = useState(""); //location search
+  const filteredCategories = categories.filter((category) =>
+    category.toLowerCase().includes(search.toLowerCase()),
   );
-  const filteredInternships = jobs.filter(
-    (job) =>
-      job.category === internshipSelectedCategory &&
-      job.domain === "internship",
+  const filteredLocations = locations.filter((location) =>
+    location.toLowerCase().includes(lsearch.toLowerCase()),
   );
+  const filteredJobs = jobs.filter((job) => {
+    const categoryMatch = search.length === 0 || search.includes(job.category);
+
+    const locationMatch =
+      lsearch.length === 0 || lsearch.includes(job.location);
+
+    // const jobTypeMatch =
+    //   selectedJobTypes.length === 0 ||
+    //   selectedJobTypes.includes(job.category);
+
+    return categoryMatch && locationMatch && job.domain === "internship";
+  });
   return (
-    // jobs section
     <>
-      <section className="jobs-section">
-        <div className="jobs-container">
-          <div className="jobs-header">
-            <h1>What are you looking for today?</h1>
-            <h2>Fresher jobs</h2>
-          </div>
-
-          <div className="jobs-buttons">
-            {categories.map((category) => (
-              <button
-                key={category}
-                className={
-                  jobSelectedCategory === category
-                    ? "category-btn active"
-                    : "category-btn"
-                }
-                onClick={() => setJobSelectedCategory(category)}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className="jobs-list">
-          {filteredJobs.map((job) => (
-            <div key={job.id} className="job-card">
-              <div className="job-card-header">
-                <h3 className="job-title">{job.title}</h3>
-                <p className="job-company">{job.company}</p>
-                <p className="job-location">
-                  <MapPin size={16} /> {job.location}
-                </p>
-                <p className="job-salary">
-                  <IndianRupee size={16} /> {job.salary}
-                </p>
+      <div>
+        <NavBar />
+      </div>
+      <main className="internship-page">
+        <div className="internship-grid">
+          <aside className="internship-filter-panel">
+            <div className="internship-filter-card">
+              <div className="internship-filter-header">
+                <div className="internship-filter-icon">
+                  <Filter size={18} />
+                </div>
+                <div>
+                  <h2>Filter</h2>
+                </div>
               </div>
-              <div className="job-card-footer">
-                <span className="job-tag">Job</span>
 
-                {job.hiring ? (
-                  <a href="#" className="apply-link">
-                    View Details <span>›</span>
-                  </a>
-                ) : (
-                  <a
-                    className="apply-link disabled"
-                    aria-disabled="true"
-                    tabIndex={-1}
-                  >
-                    Closed
-                  </a>
+              <div className="internship-filter-group">
+                <label className="internship-filter-label">Profile</label>
+                <input
+                  className="internship-filter-input"
+                  type="text"
+                  placeholder="e.g. Data Science"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                {search && (
+                  <div className="internship-dropdown">
+                    {filteredCategories.map((category) => (
+                      <button
+                        type="button"
+                        key={category}
+                        className="internship-dropdown-item"
+                        onClick={() => setSearch(category)}
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
                 )}
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
 
-      {/* Internships section */}
-
-      <section className="internship-section">
-        <div className="internship-container">
-          <div className="internship-header">
-            <h2>Internships</h2>
-          </div>
-
-          <div className="internship-buttons">
-            {categories.map((category) => (
-              <button
-                key={category}
-                className={
-                  internshipSelectedCategory === category
-                    ? "category-btn active"
-                    : "category-btn"
-                }
-                onClick={() => setInternshipSelectedCategory(category)}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className="internship-list">
-          {filteredInternships.map((job) => (
-            <div key={job.id} className="internship-card">
-              <div className="internship-card-header">
-                <h3 className="internship-title">{job.title}</h3>
-                <p className="internship-company">{job.company}</p>
-                <p className="internship-location">
-                  <MapPin size={16} /> {job.location}
-                </p>
-                <p className="internship-stipend">
-                  <IndianRupee size={16} /> {job.stipend}
-                </p>
-                <p className="internship-duration">
-                  <Calendar size={16} />
-                  <span>{job.duration}</span>
-                </p>
-              </div>
-              <div className="internship-card-footer">
-                <span className="internship-tag">Internship</span>
-
-                {job.hiring ? (
-                  <a href="#" className="internship-apply-link">
-                    View Details <span>›</span>
-                  </a>
-                ) : (
-                  <a
-                    className="internship-apply-link disabled"
-                    aria-disabled="true"
-                    tabIndex={-1}
-                  >
-                    Closed
-                  </a>
+              <div className="internship-filter-group">
+                <label className="internship-filter-label">Location</label>
+                <input
+                  className="internship-filter-input"
+                  type="text"
+                  placeholder="e.g. Delhi"
+                  value={lsearch}
+                  onChange={(e) => setLsearch(e.target.value)}
+                />
+                {lsearch && (
+                  <div className="internship-dropdown">
+                    {filteredLocations.map((location) => (
+                      <button
+                        type="button"
+                        key={location}
+                        className="internship-dropdown-item"
+                        onClick={() => setLsearch(location)}
+                      >
+                        {location}
+                      </button>
+                    ))}
+                  </div>
                 )}
               </div>
+
+              {/* <div className="filter-group">
+              <p className="filter-label">Popular categories</p>
+              <div className="category-list">
+                {categories.map((category) => (
+                  <button
+                    type="button"
+                    key={category}
+                    className="category-pill"
+                    onClick={() => setSearch(category)}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+            </div> */}
+
+              <div className="internship-filter-group">
+                <div className="internship-filter-toggle-row">
+                  <label className="internship-checkbox-label">
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => setChecked(!checked)}
+                    />
+                    Work from home
+                  </label>
+                  <label className="internship-checkbox-label">
+                    <input
+                      type="checkbox"
+                      checked={pchecked}
+                      onChange={() => setPchecked(!pchecked)}
+                    />
+                    Part time
+                  </label>
+                </div>
+              </div>
+
+              <div className="internship-filter-group">
+                <div className="internship-filter-group-row">
+                  <p className="internship-filter-label">
+                    Desired minimum monthly stipend (₹)
+                  </p>
+                </div>
+                <input
+                  className="internship-range-input"
+                  type="range"
+                  min="0"
+                  max="10"
+                  step="2"
+                  value={salary}
+                  onChange={(e) => setSalary(Number(e.target.value))}
+                  style={
+                    {
+                      "--range-progress": `${(salary / 10) * 100}%`,
+                    } as React.CSSProperties
+                  }
+                />
+                <div className="internship-slider-labels">
+                  <span>0</span>
+                  <span>2k</span>
+                  <span>4k</span>
+                  <span>6k</span>
+                  <span>8k</span>
+                  <span>10k</span>
+                </div>
+              </div>
+
+              <div className="internship-filter-group">
+                <label className="internship-filter-label">
+                  Years of experience
+                </label>
+                <input
+                  className="internship-filter-input"
+                  type="text"
+                  placeholder="Select years of experience"
+                />
+              </div>
+
+              <button
+                type="button"
+                className="internship-button-primary"
+                onClick={() => {
+                  setSearch("");
+                  setLsearch("");
+                  setChecked(false);
+                  setPchecked(false);
+                  setSalary(0);
+                }}
+              >
+                Clear filters
+              </button>
             </div>
-          ))}
+          </aside>
+
+          <section className="internship-results-panel">
+            <div className="internship-header">
+              <div>
+                <h1 className="internship-count">{filteredJobs.length} Jobs</h1>
+                <p>
+                  Search and Apply to Latest Job Vacancies & Openings in India
+                </p>
+              </div>
+            </div>
+
+            <div className="internship-cards">
+              {filteredJobs.map((job) => (
+                <article key={job.id} className="internship-card">
+                  <div className="internship-card-top">
+                    <div>
+                      <h3 className="internship-title">{job.title}</h3>
+                      <p className="internship-company">{job.company}</p>
+                    </div>
+                    {job.hiring && (
+                      <span className="internship-status">Actively hiring</span>
+                    )}
+                  </div>
+
+                  <div className="internship-meta">
+                    <div className="internship-meta-item">
+                      <MapPin size={16} />
+                      <span>{job.location}</span>
+                    </div>
+                    <div className="internship-meta-item">
+                      <IndianRupee size={16} />
+                      <span>{job.salary ?? job.stipend ?? "N/A"}</span>
+                    </div>
+                  </div>
+
+                  <div className="internship-footer">
+                    <span className="internship-tag">{job.category}</span>
+                    <button type="button" 
+                    className="internship-apply-btn"
+                    onClick={"./Internship"}>
+                      Apply now
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
         </div>
-      </section>
+      </main>
     </>
   );
 };
 
-export default Jobs;
+export default Job;

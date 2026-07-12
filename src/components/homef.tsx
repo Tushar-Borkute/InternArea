@@ -1,8 +1,8 @@
 import { Mail } from "lucide-react";
-import "./Home.css";
+import "./HomeF.css";
 
 
-const Home = () => {
+const Homef = () => {
   return (
     
       <div className="home-container">
@@ -76,4 +76,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Homef;

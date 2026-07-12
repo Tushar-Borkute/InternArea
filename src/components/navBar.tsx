@@ -1,5 +1,6 @@
 import { Send, Search } from "lucide-react";
-import "./navBar.css";
+import { Link } from "react-router-dom";
+import "./navbar.css";
 
 // (no-op handlers for now)
 const NavBar = () => {
@@ -15,9 +16,15 @@ const NavBar = () => {
         </div>
 
         <div className="nav-links">
-          <button className="nav-link">Jobs</button>
-          <button className="nav-link">Internships</button>
-          <button className="nav-link">Courses</button>
+          <Link className="nav-link" to="/Job">
+            Jobs
+          </Link>
+          <a className="nav-link" href="/Internship">
+            Internships
+          </a>
+          <a className="nav-link" href="/dsaf">
+            Courses
+          </a>
         </div>
 
         <div className="nav-actions">
@@ -29,8 +36,8 @@ const NavBar = () => {
           <button className="login-btn">Login</button>
           <button className="register-btn">Register</button>
 
-          <a className="for-employers" href="#">
-            For Employers
+          <a href="/gggg" className="for-employers">
+            For Employers <span>›</span>
           </a>
         </div>
       </div>
