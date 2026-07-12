@@ -5,6 +5,7 @@ import "./navbar.css";
 // (no-op handlers for now)
 const NavBar = () => {
   return (
+    
     <nav className="navbar">
       <div className="nav-inner">
         <div className="brand">
@@ -19,12 +20,12 @@ const NavBar = () => {
           <Link className="nav-link" to="/Job">
             Jobs
           </Link>
-          <a className="nav-link" href="/Internship">
+          <Link className="nav-link" to="/Internship">
             Internships
-          </a>
-          <a className="nav-link" href="/dsaf">
+          </Link>
+          <Link className="nav-link" to="/dsaf">
             Courses
-          </a>
+          </Link>
         </div>
 
         <div className="nav-actions">
@@ -35,6 +36,7 @@ const NavBar = () => {
 
           <button className="login-btn">Login</button>
           <button className="register-btn">Register</button>
+          <Link to="/Admin"><button className="admin-btn" >Admin</button></Link>
 
           <a href="/gggg" className="for-employers">
             For Employers <span>›</span>

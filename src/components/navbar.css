@@ -76,14 +76,19 @@
     align-items: center;
     gap: 8px;
     padding: 8px 12px;
-    border: 1px solid #e6e6e6;
-    border-radius: 999px;
+    /* border: 1px solid #e6e6e6;
+    border-radius: 999px; */
 }
 
 .search-pill input {
-    border: none;
+    border: 1px solid #0ea5e9;
+    background-color: rgb(255, 255, 255);
+    color:black;
+    height: 30px;
+    width: 150px;
     outline: none;
-    width: 180px;
+    border-radius: 20px;
+    padding-left: 20px;
 }
 
 .login-btn {
@@ -95,11 +100,20 @@
     cursor: pointer;
 }
 
+.admin-btn {
+    padding: 8px 14px;
+    background:white;
+    border: 1px solid #0ea5e9;
+    color: #0ea5e9;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
 .register-btn {
     padding: 8px 14px;
-    background: #0ea5e9;
-    border: none;
-    color: white;
+    background:white;
+    border: 1px solid #0ea5e9;
+    color: #0ea5e9;
     border-radius: 8px;
     cursor: pointer;
 }
@@ -121,14 +135,14 @@
     color: #0ea5e9;
 }
 
-.login-btn:hover {
+.login-btn:hover,
+.admin-btn:hover,
+.register-btn:hover  {
     background: #0ea5e9;
     color: white;
 }
 
-.register-btn:hover {
-    background: #0284c7;
-}
+
 
 @media (max-width: 768px) {
     .nav-links {
