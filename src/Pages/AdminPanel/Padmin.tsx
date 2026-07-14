@@ -2,11 +2,9 @@ import {
   Mail,
   Briefcase,
   Send,
-  Users,
-  BarChart2,
-  Settings,
 } from "lucide-react";
 import "./Padmin.css";
+import { Link } from "react-router-dom";
 
 const Padmin = () => {
   return (
@@ -60,36 +58,39 @@ const Padmin = () => {
           <div className="padmin-action-icon blue">
             <Mail size={20} />
           </div>
-          <div className="padmin-action-info">
+          <Link to ="/viewApplication"><div className="padmin-action-info">
             <p className="padmin-action-title">View Applications</p>
             <p className="padmin-action-desc">
               View and manage all applications from candidates
             </p>
           </div>
+          </Link>
         </div>
 
         <div className="padmin-action-card">
           <div className="padmin-action-icon green">
             <Briefcase size={20} />
           </div>
-          <div className="padmin-action-info">
+         <Link to ="/postJob"><div className="padmin-action-info">
             <p className="padmin-action-title">Post Job</p>
             <p className="padmin-action-desc">
               Create and publish new job opportunities
             </p>
           </div>
+          </Link> 
         </div>
 
         <div className="padmin-action-card">
           <div className="padmin-action-icon purple">
             <Send size={20} />
           </div>
-          <div className="padmin-action-info">
+           <Link to="/postInternship"><div className="padmin-action-info">
             <p className="padmin-action-title">Post Internship</p>
             <p className="padmin-action-desc">
               Create and manage internship positions
             </p>
           </div>
+          </Link>
         </div>
       </div>
     </div>

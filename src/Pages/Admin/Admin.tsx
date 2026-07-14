@@ -15,7 +15,7 @@ const Admin = () => {
         login.password === "12345"
     ) {
         alert("Login Successful!");
-        navigate("/Padmin");
+        navigate("/adminPanel");
     } else {
         alert("Invalid Username or Password");
     }
