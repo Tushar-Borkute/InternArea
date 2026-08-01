@@ -1,6 +1,7 @@
 import { Send, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import "./navbar.css";
+// import {auth, provider} from "../firebase/firebase";
 
 // (no-op handlers for now)
 const NavBar = () => {

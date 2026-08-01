@@ -3,6 +3,7 @@ import { useState } from "react";
 import "./Job.css";
 import NavBar from "../../components/navBar";
 
+
 const Job = () => {
   const categories = [
     "Big brands",
@@ -403,6 +404,7 @@ const Job = () => {
   const [salary, setSalary] = useState(0);
   const [search, setSearch] = useState(""); //profile search
   const [lsearch, setLsearch] = useState(""); //location search
+  const [filterOpen, setFilterOpen] = useState(false); // mobile drawer
   const filteredCategories = categories.filter((category) =>
     category.toLowerCase().includes(search.toLowerCase()),
   );
@@ -415,11 +417,19 @@ const Job = () => {
     const locationMatch =
       lsearch.length === 0 || lsearch.includes(job.location);
 
+    // Split "₹3,50,000 - ₹5,00,000 /year" on " - " to get the minimum salary
+    // then strip non-numeric chars → 350000. Slider is in lakhs → salary * 100000
+    const salaryStr = job.salary ?? "";
+    const minSalary = salaryStr
+      ? parseInt(salaryStr.split(" - ")[0].replace(/[^0-9]/g, ""), 10)
+      : 0;
+    const salaryMatch = salary === 0 || minSalary >= salary * 100000;
+
     // const jobTypeMatch =
     //   selectedJobTypes.length === 0 ||
     //   selectedJobTypes.includes(job.category);
 
-    return categoryMatch && locationMatch &&(job.domain === "job");
+    return categoryMatch && locationMatch && salaryMatch && (job.domain === "job");
   });
   return (
     <>
@@ -428,7 +438,7 @@ const Job = () => {
       </div>
       <main className="job-page">
         <div className="job-grid">
-          <aside className="filter-panel">
+          <aside className={`filter-panel${filterOpen ? " open" : ""}`}>
             <div className="filter-card">
               <div className="filter-header">
                 <div className="filter-icon">
@@ -576,11 +586,21 @@ const Job = () => {
               >
                 Clear filters
               </button>
-              
+
             </div>
           </aside>
 
           <section className="results-panel">
+            {/* Mobile-only filter toggle */}
+            <button
+              type="button"
+              className="filter-toggle-btn"
+              onClick={() => setFilterOpen((prev) => !prev)}
+            >
+              <Filter size={16} />
+              {filterOpen ? "Hide Filters" : "Show Filters"}
+            </button>
+
             <div className="jobs-header">
               <div>
                 <h1 className="jobs-count">{filteredJobs.length} Jobs</h1>

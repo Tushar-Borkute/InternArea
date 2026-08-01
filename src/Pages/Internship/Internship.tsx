@@ -260,7 +260,7 @@ const Job = () => {
       title: "Data Entry Intern",
       company: "RemoteHub",
       location: "Remote",
-      stipend: "₹4,000/month",
+      stipend: "₹8,000/month",
       duration: "2 Months",
       hiring: true,
       domain: "internship",
@@ -403,6 +403,7 @@ const Job = () => {
   const [salary, setSalary] = useState(0);
   const [search, setSearch] = useState(""); //profile search
   const [lsearch, setLsearch] = useState(""); //location search
+  const [filterOpen, setFilterOpen] = useState(false); // mobile drawer
   const filteredCategories = categories.filter((category) =>
     category.toLowerCase().includes(search.toLowerCase()),
   );
@@ -415,11 +416,17 @@ const Job = () => {
     const locationMatch =
       lsearch.length === 0 || lsearch.includes(job.location);
 
+    // Parse stipend string like "₹4,000/month" → 4000, then compare
+    const stipendAmount = job.stipend
+      ? parseInt(job.stipend.replace(/[^0-9]/g, ""), 10)
+      : 0;
+    const salaryMatch = salary === 0 || stipendAmount >= salary * 1000;
+
     // const jobTypeMatch =
     //   selectedJobTypes.length === 0 ||
     //   selectedJobTypes.includes(job.category);
 
-    return categoryMatch && locationMatch && job.domain === "internship";
+    return categoryMatch && locationMatch && salaryMatch && job.domain === "internship";
   });
   return (
     <>
@@ -428,7 +435,7 @@ const Job = () => {
       </div>
       <main className="internship-page">
         <div className="internship-grid">
-          <aside className="internship-filter-panel">
+          <aside className={`internship-filter-panel${filterOpen ? " open" : ""}`}>
             <div className="internship-filter-card">
               <div className="internship-filter-header">
                 <div className="internship-filter-icon">
@@ -584,11 +591,21 @@ const Job = () => {
           </aside>
 
           <section className="internship-results-panel">
+            {/* Mobile-only filter toggle */}
+            <button
+              type="button"
+              className="internship-filter-toggle-btn"
+              onClick={() => setFilterOpen((prev) => !prev)}
+            >
+              <Filter size={16} />
+              {filterOpen ? "Hide Filters" : "Show Filters"}
+            </button>
+
             <div className="internship-header">
               <div>
-                <h1 className="internship-count">{filteredJobs.length} Jobs</h1>
+                <h1 className="internship-count">{filteredJobs.length} Internships</h1>
                 <p>
-                  Search and Apply to Latest Job Vacancies & Openings in India
+                  Search and Apply to Latest Internship Vacancies &amp; Openings in India
                 </p>
               </div>
             </div>
@@ -619,9 +636,8 @@ const Job = () => {
 
                   <div className="internship-footer">
                     <span className="internship-tag">{job.category}</span>
-                    <button type="button" 
-                    className="internship-apply-btn"
-                    onClick={"./Internship"}>
+                    <button type="button"
+                      className="internship-apply-btn">
                       Apply now
                     </button>
                   </div>
