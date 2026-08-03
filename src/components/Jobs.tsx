@@ -1,6 +1,33 @@
-import { useState } from "react";
-import { MapPin, Calendar, IndianRupee } from "lucide-react";
+import { useState, useEffect } from "react";
+import { MapPin, Calendar, IndianRupee, Loader2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import "./Jobs.css";
+
+// ── Types matching backend Mongoose models ─────────────────────────────────
+interface Job {
+  _id: string;
+  title: string;
+  company: string;
+  location: string;
+  category: string;
+  salary?: string;
+  joiningdate?: string;
+  numberofopenings?: string;
+}
+
+interface Internship {
+  _id: string;
+  title: string;
+  company: string;
+  location: string;
+  category: string;
+  stipend?: string;
+  startdate?: string;
+  numberofopenings?: string;
+}
+
+const API = "http://localhost:5000/api";
 
 const Jobs = () => {
   const categories = [
@@ -14,392 +41,70 @@ const Jobs = () => {
     "Data Science",
   ];
 
-  const jobs = [
-    // ========================= JOBS =========================
+  // ── State ────────────────────────────────────────────────────────────────
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [internships, setInternships] = useState<Internship[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    // Big brands
-    {
-      id: 1,
-      category: "Big brands",
-      title: "Software Engineer",
-      company: "Google",
-      location: "Bangalore",
-      salary: "₹12,00,000 - ₹18,00,000 /year",
-      hiring: false,
-      domain: "job",
-    },
-    {
-      id: 2,
-      category: "Big brands",
-      title: "Product Analyst",
-      company: "Amazon",
-      location: "Hyderabad",
-      salary: "₹10,00,000 - ₹15,00,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-
-    // Work from Home
-    {
-      id: 3,
-      category: "Work from Home",
-      title: "Content Writer",
-      company: "Pepper Content",
-      location: "Remote",
-      salary: "₹3,50,000 - ₹5,00,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-    {
-      id: 4,
-      category: "Work from Home",
-      title: "Customer Support Executive",
-      company: "Concentrix",
-      location: "Remote",
-      salary: "₹2,50,000 - ₹4,00,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-
-    // Part-time
-    {
-      id: 5,
-      category: "Part-time",
-      title: "Data Entry Operator",
-      company: "RemoteHub",
-      location: "Remote",
-      salary: "₹1,80,000 - ₹2,40,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-    {
-      id: 6,
-      category: "Part-time",
-      title: "Online Tutor",
-      company: "Chegg",
-      location: "Remote",
-      salary: "₹2,40,000 - ₹3,60,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-
-    // MBA
-    {
-      id: 7,
-      category: "MBA",
-      title: "Management Trainee",
-      company: "HDFC Bank",
-      location: "Mumbai",
-      salary: "₹8,00,000 - ₹11,00,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-    {
-      id: 8,
-      category: "MBA",
-      title: "Business Development Associate",
-      company: "BYJU'S",
-      location: "Bangalore",
-      salary: "₹6,00,000 - ₹9,00,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-
-    // Engineering
-    {
-      id: 9,
-      category: "Engineering",
-      title: "Mechanical Engineer",
-      company: "L&T",
-      location: "Chennai",
-      salary: "₹5,50,000 - ₹8,00,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-    {
-      id: 10,
-      category: "Engineering",
-      title: "Civil Engineer",
-      company: "Tata Projects",
-      location: "Pune",
-      salary: "₹5,00,000 - ₹7,50,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-
-    // Media
-    {
-      id: 11,
-      category: "Media",
-      title: "Video Editor",
-      company: "Zee Studios",
-      location: "Mumbai",
-      salary: "₹4,00,000 - ₹6,00,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-    {
-      id: 12,
-      category: "Media",
-      title: "Journalist",
-      company: "Times Group",
-      location: "Delhi",
-      salary: "₹3,80,000 - ₹6,20,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-
-    // Design
-    {
-      id: 13,
-      category: "Design",
-      title: "UI/UX Designer",
-      company: "Figma",
-      location: "Bangalore",
-      salary: "₹6,00,000 - ₹9,00,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-    {
-      id: 14,
-      category: "Design",
-      title: "Graphic Designer",
-      company: "Canva",
-      location: "Remote",
-      salary: "₹4,00,000 - ₹6,00,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-
-    // Data Science
-    {
-      id: 15,
-      category: "Data Science",
-      title: "Data Scientist",
-      company: "Flipkart",
-      location: "Bangalore",
-      salary: "₹10,00,000 - ₹16,00,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-    {
-      id: 16,
-      category: "Data Science",
-      title: "Machine Learning Engineer",
-      company: "Microsoft",
-      location: "Hyderabad",
-      salary: "₹12,00,000 - ₹18,00,000 /year",
-      hiring: true,
-      domain: "job",
-    },
-
-    // ====================== INTERNSHIPS ======================
-
-    // Big brands
-    {
-      id: 17,
-      category: "Big brands",
-      title: "Software Development Intern",
-      company: "Google",
-      location: "Bangalore",
-      stipend: "₹4,000/month",
-      duration: "6 Months",
-      hiring: true,
-      domain: "internship",
-    },
-    {
-      id: 18,
-      category: "Big brands",
-      title: "Product Management Intern",
-      company: "Amazon",
-      location: "Hyderabad",
-      stipend: "₹4,000/month",
-      duration: "3 Months",
-      hiring: true,
-      domain: "internship",
-    },
-
-    //Work from Home
-    {
-      id: 19,
-      category: "Work from Home",
-      title: "Content Writing Intern",
-      company: "Pepper Content",
-      location: "Remote",
-      stipend: "₹4,000/month",
-      duration: "3 Months",
-      hiring: true,
-      domain: "internship",
-    },
-    {
-      id: 20,
-      category: "Work from Home",
-      title: "Customer Support Intern",
-      company: "Concentrix",
-      location: "Remote",
-      stipend: "₹4,000/month",
-      duration: "6 Months",
-      hiring: true,
-      domain: "internship",
-    },
-
-    //part time
-    {
-      id: 21,
-      category: "Part-time",
-      title: "Data Entry Intern",
-      company: "RemoteHub",
-      location: "Remote",
-      stipend: "₹4,000/month",
-      duration: "2 Months",
-      hiring: true,
-      domain: "internship",
-    },
-    {
-      id: 22,
-      category: "Part-time",
-      title: "Online Tutor Intern",
-      company: "Chegg",
-      location: "Remote",
-      stipend: "₹4,000/month",
-      duration: "3 Months",
-      hiring: true,
-      domain: "internship",
-    },
-
-    //MBA
-    {
-      id: 23,
-      category: "MBA",
-      title: "Business Analyst Intern",
-      company: "HDFC Bank",
-      location: "Mumbai",
-      stipend: "₹4,000/month",
-      duration: "6 Months",
-      hiring: true,
-      domain: "internship",
-    },
-    {
-      id: 24,
-      category: "MBA",
-      title: "Marketing Intern",
-      company: "BYJU'S",
-      location: "Bangalore",
-      stipend: "₹4,000/month",
-      duration: "3 Months",
-      hiring: true,
-      domain: "internship",
-    },
-
-    //Engineering
-    {
-      id: 25,
-      category: "Engineering",
-      title: "Mechanical Engineering Intern",
-      company: "L&T",
-      location: "Chennai",
-      stipend: "₹4,000/month",
-      duration: "6 Months",
-      hiring: true,
-      domain: "internship",
-    },
-    {
-      id: 26,
-      category: "Engineering",
-      title: "Civil Engineering Intern",
-      company: "Tata Projects",
-      location: "Pune",
-      stipend: "₹4,000/month",
-      duration: "6 Months",
-      hiring: true,
-      domain: "internship",
-    },
-
-    //Media
-    {
-      id: 27,
-      category: "Media",
-      title: "Video Editing Intern",
-      company: "Zee Studios",
-      location: "Mumbai",
-      stipend: "₹4,000/month",
-      duration: "3 Months",
-      hiring: true,
-      domain: "internship",
-    },
-    {
-      id: 28,
-      category: "Media",
-      title: "Journalism Intern",
-      company: "Times Group",
-      location: "Delhi",
-      stipend: "₹4,000/month",
-      duration: "3 Months",
-      hiring: true,
-      domain: "internship",
-    },
-
-    //Design
-    {
-      id: 29,
-      category: "Design",
-      title: "UI/UX Design Intern",
-      company: "Figma",
-      location: "Bangalore",
-      stipend: "₹4,000/month",
-      duration: "6 Months",
-      hiring: true,
-      domain: "internship",
-    },
-    {
-      id: 30,
-      category: "Design",
-      title: "Graphic Design Intern",
-      company: "Canva",
-      location: "Remote",
-      stipend: "₹4,000/month",
-      duration: "3 Months",
-      hiring: true,
-      domain: "internship",
-    },
-
-    //Data Science
-    {
-      id: 31,
-      category: "Data Science",
-      title: "Data Science Intern",
-      company: "Flipkart",
-      location: "Bangalore",
-      stipend: "₹4,000/month",
-      duration: "6 Months",
-      hiring: true,
-      domain: "internship",
-    },
-    {
-      id: 32,
-      category: "Data Science",
-      title: "Machine Learning Intern",
-      company: "Microsoft",
-      location: "Hyderabad",
-      stipend: "₹4,000/month",
-      duration: "6 Months",
-      hiring: true,
-      domain: "internship",
-    },
-  ];
   const [jobSelectedCategory, setJobSelectedCategory] = useState("Big brands");
-  const [internshipSelectedCategory, setInternshipSelectedCategory] =useState("Big brands");
+  const [internshipSelectedCategory, setInternshipSelectedCategory] =
+    useState("Big brands");
+
+  // ── Fetch from backend ───────────────────────────────────────────────────
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const [internshipRes, jobRes] = await Promise.all([
+          axios.get(`${API}/internship`),
+          axios.get(`${API}/job`),
+        ]);
+        setInternships(internshipRes.data);
+        setJobs(jobRes.data);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load data. Make sure the backend is running.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // ── Filtered lists ────────────────────────────────────────────────────────
   const filteredJobs = jobs.filter(
-    (job) => job.category === jobSelectedCategory && job.domain === "job",
+    (job) => job.category === jobSelectedCategory
   );
-  const filteredInternships = jobs.filter(
-    (job) =>
-      job.category === internshipSelectedCategory &&
-      job.domain === "internship",
+
+  const filteredInternships = internships.filter(
+    (intern) => intern.category === internshipSelectedCategory
   );
+
+  // ── Loading state ─────────────────────────────────────────────────────────
+  if (loading) {
+    return (
+      <div className="jobs-loading">
+        <Loader2 className="jobs-spinner" size={40} />
+        <p>Loading opportunities…</p>
+      </div>
+    );
+  }
+
+  // ── Error state ───────────────────────────────────────────────────────────
+  if (error) {
+    return (
+      <div className="jobs-error">
+        <p>{error}</p>
+      </div>
+    );
+  }
+
+  // ── Render ────────────────────────────────────────────────────────────────
   return (
-    // jobs section
     <>
+      {/* ===== Jobs Section ===== */}
       <section className="jobs-section">
         <div className="jobs-container">
           <div className="jobs-header">
@@ -423,43 +128,45 @@ const Jobs = () => {
             ))}
           </div>
         </div>
-        <div className="jobs-list">
-          {filteredJobs.map((job) => (
-            <div key={job.id} className="job-card">
-              <div className="job-card-header">
-                <h3 className="job-title">{job.title}</h3>
-                <p className="job-company">{job.company}</p>
-                <p className="job-location">
-                  <MapPin size={16} /> {job.location}
-                </p>
-                <p className="job-salary">
-                  <IndianRupee size={16} /> {job.salary}
-                </p>
-              </div>
-              <div className="job-card-footer">
-                <span className="job-tag">Job</span>
 
-                {job.hiring ? (
-                  <a href="#" className="apply-link">
-                    View Details <span>›</span>
-                  </a>
-                ) : (
-                  <a
-                    className="apply-link disabled"
-                    aria-disabled="true"
-                    tabIndex={-1}
-                  >
-                    Closed
-                  </a>
-                )}
-              </div>
+        <div className="jobs-list">
+          {filteredJobs.length === 0 ? (
+            <div className="jobs-empty">
+              <p>No jobs found in <strong>{jobSelectedCategory}</strong>.</p>
             </div>
-          ))}
+          ) : (
+            filteredJobs.map((job) => (
+              <div key={job._id} className="job-card">
+                <div className="job-card-header">
+                  <h3 className="job-title">{job.title}</h3>
+                  <p className="job-company">{job.company}</p>
+                  <p className="job-location">
+                    <MapPin size={16} /> {job.location}
+                  </p>
+                  {job.salary && (
+                    <p className="job-salary">
+                      <IndianRupee size={16} /> {job.salary}
+                    </p>
+                  )}
+                  {job.joiningdate && (
+                    <p className="job-salary">
+                      <Calendar size={16} /> Joining: {job.joiningdate}
+                    </p>
+                  )}
+                </div>
+                <div className="job-card-footer">
+                  <span className="job-tag">Job</span>
+                  <Link to={`/job/${job._id}`} className="apply-link">
+                    View Details <span>›</span>
+                  </Link>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </section>
 
-      {/* Internships section */}
-
+      {/* ===== Internships Section ===== */}
       <section className="internship-section">
         <div className="internship-container">
           <div className="internship-header">
@@ -482,42 +189,45 @@ const Jobs = () => {
             ))}
           </div>
         </div>
-        <div className="internship-list">
-          {filteredInternships.map((job) => (
-            <div key={job.id} className="internship-card">
-              <div className="internship-card-header">
-                <h3 className="internship-title">{job.title}</h3>
-                <p className="internship-company">{job.company}</p>
-                <p className="internship-location">
-                  <MapPin size={16} /> {job.location}
-                </p>
-                <p className="internship-stipend">
-                  <IndianRupee size={16} /> {job.stipend}
-                </p>
-                <p className="internship-duration">
-                  <Calendar size={16} />
-                  <span>{job.duration}</span>
-                </p>
-              </div>
-              <div className="internship-card-footer">
-                <span className="internship-tag">Internship</span>
 
-                {job.hiring ? (
-                  <a href="#" className="internship-apply-link">
-                    View Details <span>›</span>
-                  </a>
-                ) : (
-                  <a
-                    className="internship-apply-link disabled"
-                    aria-disabled="true"
-                    tabIndex={-1}
-                  >
-                    Closed
-                  </a>
-                )}
-              </div>
+        <div className="internship-list">
+          {filteredInternships.length === 0 ? (
+            <div className="jobs-empty">
+              <p>
+                No internships found in{" "}
+                <strong>{internshipSelectedCategory}</strong>.
+              </p>
             </div>
-          ))}
+          ) : (
+            filteredInternships.map((intern) => (
+              <div key={intern._id} className="internship-card">
+                <div className="internship-card-header">
+                  <h3 className="internship-title">{intern.title}</h3>
+                  <p className="internship-company">{intern.company}</p>
+                  <p className="internship-location">
+                    <MapPin size={16} /> {intern.location}
+                  </p>
+                  {intern.stipend && (
+                    <p className="internship-stipend">
+                      <IndianRupee size={16} /> {intern.stipend}
+                    </p>
+                  )}
+                  {intern.startdate && (
+                    <p className="internship-duration">
+                      <Calendar size={16} />
+                      <span>Start: {intern.startdate}</span>
+                    </p>
+                  )}
+                </div>
+                <div className="internship-card-footer">
+                  <span className="internship-tag">Internship</span>
+                  <Link to={`/internship/${intern._id}`} className="internship-apply-link">
+                    View Details <span>›</span>
+                  </Link>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </section>
     </>

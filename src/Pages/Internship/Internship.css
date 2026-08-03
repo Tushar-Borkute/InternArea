@@ -38,10 +38,10 @@ body {
 
 /* ── Page shell ──────────────────────────────────────────────── */
 .internship-page {
-  height: calc(100vh - 80px);
-  margin-top: 80px;
-  background: var(--i-bg);
-  padding: 0 0 0 280px;
+  height: calc(100vh - 114px);
+  margin-top: 0;
+  background: #faf8f5;
+  padding: 16px 20px;
   box-sizing: border-box;
   color: var(--i-text);
   overflow: hidden;
@@ -286,11 +286,25 @@ body {
 .internship-slider-labels {
   display: flex;
   justify-content: space-between;
-  padding: 0 10px;
-  /* 10px = half of 20px thumb, aligns numbers under ticks */
-  margin-top: 4px;
+  padding: 0 3px;
+  margin-top: 6px;
   color: var(--i-muted);
   font-size: 11px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.internship-slider-labels span {
+  flex: 1;
+  text-align: center;
+}
+
+.internship-slider-labels span:first-child {
+  text-align: left;
+}
+
+.internship-slider-labels span:last-child {
+  text-align: right;
 }
 
 /* ── Checkboxes ──────────────────────────────────────────────── */

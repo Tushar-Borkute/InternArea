@@ -315,3 +315,53 @@
     min-width: 120px;
   }
 }
+
+/* ── Loading state ── */
+.jobs-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 80px 20px;
+  background: linear-gradient(180deg, #d2e3fa 0%, #abe5fd 100%);
+  color: #1e40af;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.jobs-spinner {
+  animation: spin 1s linear infinite;
+  color: #3b82f6;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Error state ── */
+.jobs-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  background: linear-gradient(180deg, #d2e3fa 0%, #abe5fd 100%);
+  color: #dc2626;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ── Empty state ── */
+.jobs-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px 20px;
+  color: #4b5563;
+  font-size: 15px;
+}
+
+.jobs-empty strong {
+  color: #1d4ed8;
+}

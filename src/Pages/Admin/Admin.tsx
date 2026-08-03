@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
 import "./Admin.css";
 
 const Admin = () => {
@@ -9,23 +11,34 @@ const Admin = () => {
         password: "",
     });
 
-    const handleLogin = () => {
-    if (
-        login.username === "Tushar" &&
-        login.password === "12345"
-    ) {
-        alert("Login Successful!");
-        navigate("/adminPanel");
-    } else {
-        alert("Invalid Username or Password");
-    }
-};
+    const [isloading, setisloading] = useState(false);
+
     function handlechange(e: React.ChangeEvent<HTMLInputElement>) {
         setLogin({
             ...login,
             [e.target.name]: e.target.value,
         });
     }
+
+    const handlesubmit = async (e: any) => {
+        e.preventDefault();
+        if (login.username === "" || login.password === "") {
+            toast.error("Please fill all the fields");
+            return;
+        }
+
+        try {
+            setisloading(true);
+            await axios.post("http://localhost:5000/api/admin/adminlogin", login);
+            toast.success("Logged in successfully");
+            navigate("/adminPanel");
+        } catch (error) {
+            console.log(error);
+            toast.error("Invalid Username or Password");
+        } finally {
+            setisloading(false);
+        }
+    };
 
     return (
         <div className="admin-page">
@@ -42,7 +55,7 @@ const Admin = () => {
                 </div>
 
                 {/* Form */}
-                <form className="admin-form" onSubmit={(e) => e.preventDefault()}>
+                <form className="admin-form" onSubmit={handlesubmit}>
                     <div className="admin-form-group">
                         <label htmlFor="username">Username</label>
                         <input
@@ -69,8 +82,15 @@ const Admin = () => {
                         />
                     </div>
 
-                    <button type="submit" className="admin-signin-btn" onClick={handleLogin}>
-                        Sign In
+                    <button type="submit" className="admin-signin-btn" disabled={isloading}>
+                        {isloading ? (
+                            <div className="flex items-center gap-2">
+                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-t-transparent border-white"></div>
+                                Signing in...
+                            </div>
+                        ) : (
+                            "Sign In"
+                        )}
                     </button>
                 </form>
             </div>
