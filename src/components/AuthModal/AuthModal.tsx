@@ -304,4 +304,3 @@ const AuthModal = ({ isOpen, onClose, initialTab = "login" }: AuthModalProps) =>
 };
 
 export default AuthModal;
-

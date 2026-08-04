@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { MapPin, Calendar, IndianRupee, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useLanguage } from "../context/LanguageContext";
 import "./Jobs.css";
 
 // ── Types matching backend Mongoose models ─────────────────────────────────
@@ -30,6 +31,8 @@ interface Internship {
 const API = "http://localhost:5000/api";
 
 const Jobs = () => {
+  const { t } = useLanguage();
+
   const categories = [
     "Big brands",
     "Work from Home",
@@ -65,7 +68,7 @@ const Jobs = () => {
         setJobs(jobRes.data);
       } catch (err) {
         console.error(err);
-        setError("Failed to load data. Make sure the backend is running.");
+        setError(t("jobs.loadingError"));
       } finally {
         setLoading(false);
       }
@@ -87,7 +90,7 @@ const Jobs = () => {
     return (
       <div className="jobs-loading">
         <Loader2 className="jobs-spinner" size={40} />
-        <p>Loading opportunities…</p>
+        <p>{t("jobs.loading")}</p>
       </div>
     );
   }
@@ -108,8 +111,8 @@ const Jobs = () => {
       <section className="jobs-section">
         <div className="jobs-container">
           <div className="jobs-header">
-            <h1>What are you looking for today?</h1>
-            <h2>Fresher jobs</h2>
+            <h1>{t("jobs.lookingFor")}</h1>
+            <h2>{t("jobs.fresherJobs")}</h2>
           </div>
 
           <div className="jobs-buttons">
@@ -132,7 +135,7 @@ const Jobs = () => {
         <div className="jobs-list">
           {filteredJobs.length === 0 ? (
             <div className="jobs-empty">
-              <p>No jobs found in <strong>{jobSelectedCategory}</strong>.</p>
+              <p>{t("jobs.noJobsFound")} <strong>{jobSelectedCategory}</strong>.</p>
             </div>
           ) : (
             filteredJobs.map((job) => (
@@ -150,14 +153,14 @@ const Jobs = () => {
                   )}
                   {job.joiningdate && (
                     <p className="job-salary">
-                      <Calendar size={16} /> Joining: {job.joiningdate}
+                      <Calendar size={16} /> {t("detail.joining")} {job.joiningdate}
                     </p>
                   )}
                 </div>
                 <div className="job-card-footer">
                   <span className="job-tag">Job</span>
                   <Link to={`/job/${job._id}`} className="apply-link">
-                    View Details <span>›</span>
+                    {t("jobs.viewDetails")} <span>›</span>
                   </Link>
                 </div>
               </div>
@@ -170,7 +173,7 @@ const Jobs = () => {
       <section className="internship-section">
         <div className="internship-container">
           <div className="internship-header">
-            <h2>Internships</h2>
+            <h2>{t("jobs.internships")}</h2>
           </div>
 
           <div className="internship-buttons">
@@ -194,7 +197,7 @@ const Jobs = () => {
           {filteredInternships.length === 0 ? (
             <div className="jobs-empty">
               <p>
-                No internships found in{" "}
+                {t("jobs.noInternshipsFound")}{" "}
                 <strong>{internshipSelectedCategory}</strong>.
               </p>
             </div>
@@ -215,14 +218,14 @@ const Jobs = () => {
                   {intern.startdate && (
                     <p className="internship-duration">
                       <Calendar size={16} />
-                      <span>Start: {intern.startdate}</span>
+                      <span>{t("detail.start")} {intern.startdate}</span>
                     </p>
                   )}
                 </div>
                 <div className="internship-card-footer">
                   <span className="internship-tag">Internship</span>
                   <Link to={`/internship/${intern._id}`} className="internship-apply-link">
-                    View Details <span>›</span>
+                    {t("jobs.viewDetails")} <span>›</span>
                   </Link>
                 </div>
               </div>

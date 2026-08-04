@@ -5,6 +5,7 @@ import axios from "axios";
 import "./Job.css";
 import NavBar from "../../components/navBar";
 import Breadcrumb from "../../components/Breadcrumb";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface Job {
   _id: string;
@@ -21,6 +22,8 @@ interface Job {
 }
 
 const Job = () => {
+  const { t } = useLanguage();
+
   const categories = [
     "Big brands",
     "Work from Home",
@@ -56,7 +59,7 @@ const Job = () => {
         setJobs(res.data);
       } catch (err) {
         console.error(err);
-        setError("Failed to load jobs. Make sure the backend is running.");
+        setError(t("jobsPage.loadError"));
       } finally {
         setLoading(false);
       }
@@ -97,7 +100,7 @@ const Job = () => {
     return (
       <>
         <NavBar />
-        <Breadcrumb items={[{ label: "Home", path: "/" }, { label: "Jobs" }]} />
+        <Breadcrumb items={[{ label: t("breadcrumb.home"), path: "/" }, { label: t("breadcrumb.jobs") }]} />
         <main className="job-page">
           <div
             style={{
@@ -113,7 +116,7 @@ const Job = () => {
             }}
           >
             <Loader2 size={40} style={{ animation: "spin 1s linear infinite" }} />
-            <p>Loading jobs…</p>
+            <p>{t("jobsPage.loading")}</p>
           </div>
         </main>
       </>
@@ -124,7 +127,7 @@ const Job = () => {
     return (
       <>
         <NavBar />
-        <Breadcrumb items={[{ label: "Home", path: "/" }, { label: "Jobs" }]} />
+        <Breadcrumb items={[{ label: t("breadcrumb.home"), path: "/" }, { label: t("breadcrumb.jobs") }]} />
         <main className="job-page">
           <div
             style={{
@@ -144,7 +147,7 @@ const Job = () => {
   return (
     <>
       <NavBar />
-      <Breadcrumb items={[{ label: "Home", path: "/" }, { label: "Jobs" }]} />
+      <Breadcrumb items={[{ label: t("breadcrumb.home"), path: "/" }, { label: t("breadcrumb.jobs") }]} />
       <main className="job-page">
         <div className="job-grid">
           <aside className={`filter-panel${filterOpen ? " open" : ""}`}>
@@ -154,12 +157,12 @@ const Job = () => {
                   <Filter size={18} />
                 </div>
                 <div>
-                  <h2>Filter</h2>
+                  <h2>{t("jobsPage.filter")}</h2>
                 </div>
               </div>
 
               <div className="filter-group">
-                <label className="filter-label">Profile</label>
+                <label className="filter-label">{t("jobsPage.profile")}</label>
                 <input
                   className="filter-input"
                   type="text"
@@ -184,7 +187,7 @@ const Job = () => {
               </div>
 
               <div className="filter-group">
-                <label className="filter-label">Location</label>
+                <label className="filter-label">{t("jobsPage.location")}</label>
                 <input
                   className="filter-input"
                   type="text"
@@ -216,7 +219,7 @@ const Job = () => {
                       checked={checked}
                       onChange={() => setChecked(!checked)}
                     />
-                    Work from home
+                    {t("jobsPage.workFromHome")}
                   </label>
                   <label className="checkbox-label">
                     <input
@@ -224,14 +227,14 @@ const Job = () => {
                       checked={pchecked}
                       onChange={() => setPchecked(!pchecked)}
                     />
-                    Part time
+                    {t("jobsPage.partTime")}
                   </label>
                 </div>
               </div>
 
               <div className="filter-group">
                 <div className="filter-group-row">
-                  <p className="filter-label">Annual salary (in lakhs)</p>
+                  <p className="filter-label">{t("jobsPage.annualSalary")}</p>
                 </div>
                 <input
                   className="range-input"
@@ -258,7 +261,7 @@ const Job = () => {
               </div>
 
               <div className="filter-group">
-                <label className="filter-label">Years of experience</label>
+                <label className="filter-label">{t("jobsPage.yearsExperience")}</label>
                 <input
                   className="filter-input"
                   type="text"
@@ -277,7 +280,7 @@ const Job = () => {
                   setSalary(0);
                 }}
               >
-                Clear filters
+                {t("jobsPage.clearFilters")}
               </button>
             </div>
           </aside>
@@ -290,15 +293,13 @@ const Job = () => {
               onClick={() => setFilterOpen((prev) => !prev)}
             >
               <Filter size={16} />
-              {filterOpen ? "Hide Filters" : "Show Filters"}
+              {filterOpen ? t("jobsPage.hideFilters") : t("jobsPage.showFilters")}
             </button>
 
             <div className="jobs-header">
               <div>
-                <h1 className="jobs-count">{filteredJobs.length} Jobs</h1>
-                <p>
-                  Search and Apply to Latest Job Vacancies &amp; Openings in India
-                </p>
+                <h1 className="jobs-count">{filteredJobs.length} {t("jobsPage.jobs")}</h1>
+                <p>{t("jobsPage.searchApply")}</p>
               </div>
             </div>
 
@@ -313,7 +314,7 @@ const Job = () => {
                     fontSize: "15px",
                   }}
                 >
-                  No jobs found matching your filters.
+                  {t("jobsPage.noJobsFound")}
                 </div>
               ) : (
                 filteredJobs.map((job) => (
@@ -323,7 +324,7 @@ const Job = () => {
                         <h3 className="job-title">{job.title}</h3>
                         <p className="job-company">{job.company}</p>
                       </div>
-                      <span className="job-status">Actively hiring</span>
+                      <span className="job-status">{t("jobsPage.activelyHiring")}</span>
                     </div>
 
                     <div className="job-meta">
@@ -342,7 +343,7 @@ const Job = () => {
                     <div className="job-footer">
                       <span className="job-tag">{job.category}</span>
                       <Link to={`/job/${job._id}`} className="apply-btn">
-                        Apply now
+                        {t("jobsPage.applyNow")}
                       </Link>
                     </div>
                   </article>

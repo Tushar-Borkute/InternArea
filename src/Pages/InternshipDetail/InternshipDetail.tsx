@@ -5,6 +5,7 @@ import axios from "axios";
 import NavBar from "../../components/navBar";
 import ApplyModal from "../../components/ApplyModal/ApplyModal";
 import Breadcrumb from "../../components/Breadcrumb";
+import { useLanguage } from "../../context/LanguageContext";
 import "./InternshipDetail.css";
 
 interface Internship {
@@ -25,6 +26,7 @@ interface Internship {
 
 const InternshipDetail = () => {
   const { id } = useParams<{ id: string }>();
+  const { t } = useLanguage();
   const [intern, setIntern] = useState<Internship | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,7 +39,7 @@ const InternshipDetail = () => {
         const res = await axios.get(`http://localhost:5000/api/internship/${id}`);
         setIntern(res.data);
       } catch {
-        setError("Internship not found or server error.");
+        setError(t("detail.notFound"));
       } finally {
         setLoading(false);
       }
@@ -49,10 +51,10 @@ const InternshipDetail = () => {
     return (
       <div className="id-page">
         <NavBar />
-        <Breadcrumb items={[{ label: "Home", path: "/" }, { label: "Internships", path: "/Internship" }, { label: "Internship Details" }]} />
+        <Breadcrumb items={[{ label: t("breadcrumb.home"), path: "/" }, { label: t("breadcrumb.internships"), path: "/Internship" }, { label: t("breadcrumb.internshipDetails") }]} />
         <div className="id-center">
           <div className="id-spinner" />
-          <p>Loading internship details…</p>
+          <p>{t("detail.loading")}</p>
         </div>
       </div>
     );
@@ -62,10 +64,10 @@ const InternshipDetail = () => {
     return (
       <div className="id-page">
         <NavBar />
-        <Breadcrumb items={[{ label: "Home", path: "/" }, { label: "Internships", path: "/Internship" }, { label: "Not Found" }]} />
+        <Breadcrumb items={[{ label: t("breadcrumb.home"), path: "/" }, { label: t("breadcrumb.internships"), path: "/Internship" }, { label: t("breadcrumb.notFound") }]} />
         <div className="id-center">
-          <p style={{ color: "#dc2626" }}>{error || "Internship not found."}</p>
-          <Link to="/Internship" className="id-back-btn">← Back to Internships</Link>
+          <p style={{ color: "#dc2626" }}>{error || t("detail.notFound")}</p>
+          <Link to="/Internship" className="id-back-btn">{t("detail.backToInternships")}</Link>
         </div>
       </div>
     );
@@ -80,8 +82,8 @@ const InternshipDetail = () => {
       <NavBar />
       <Breadcrumb
         items={[
-          { label: "Home", path: "/" },
-          { label: "Internships", path: "/Internship" },
+          { label: t("breadcrumb.home"), path: "/" },
+          { label: t("breadcrumb.internships"), path: "/Internship" },
           { label: intern.title },
         ]}
       />
@@ -94,21 +96,20 @@ const InternshipDetail = () => {
             <div className="id-meta-pills">
               <span className="id-pill"><MapPin size={14} /> {intern.location}</span>
               {intern.stipend && <span className="id-pill"><IndianRupee size={14} /> {intern.stipend}</span>}
-              {intern.startdate && <span className="id-pill"><Calendar size={14} /> Start: {intern.startdate}</span>}
-              {intern.numberofopenings && <span className="id-pill"><Users size={14} /> {intern.numberofopenings} Openings</span>}
+              {intern.startdate && <span className="id-pill"><Calendar size={14} /> {t("detail.start")} {intern.startdate}</span>}
+              {intern.numberofopenings && <span className="id-pill"><Users size={14} /> {intern.numberofopenings} {t("detail.openings")}</span>}
             </div>
           </div>
           <div className="id-hero-actions">
-            <span className="id-hiring-badge">Actively Hiring</span>
+            <span className="id-hiring-badge">{t("detail.activelyHiring")}</span>
             <span className="id-category-tag">{intern.category}</span>
-
           </div>
         </div>
 
         {/* ── About Company ── */}
         {intern.aboutcompany && (
           <div className="id-section">
-            <h2>About {intern.company}</h2>
+            <h2>{t("detail.aboutCompany")} {intern.company}</h2>
             <p>{intern.aboutcompany}</p>
           </div>
         )}
@@ -116,7 +117,7 @@ const InternshipDetail = () => {
         {/* ── About Internship ── */}
         {intern.aboutinternship && (
           <div className="id-section">
-            <h2><BookOpen size={16} style={{ verticalAlign: "middle", marginRight: 6 }} />About the Internship</h2>
+            <h2><BookOpen size={16} style={{ verticalAlign: "middle", marginRight: 6 }} />{t("detail.aboutInternship")}</h2>
             <p>{intern.aboutinternship}</p>
           </div>
         )}
@@ -124,7 +125,7 @@ const InternshipDetail = () => {
         {/* ── Who Can Apply ── */}
         {intern.whocanapply && (
           <div className="id-section">
-            <h2>Who Can Apply</h2>
+            <h2>{t("detail.whoCanApply")}</h2>
             <p>{intern.whocanapply}</p>
           </div>
         )}
@@ -132,7 +133,7 @@ const InternshipDetail = () => {
         {/* ── Perks ── */}
         {perksList.length > 0 && (
           <div className="id-section">
-            <h2>Perks & Benefits</h2>
+            <h2>{t("detail.perksAndBenefits")}</h2>
             <div className="id-perks">
               {perksList.map((perk, i) => (
                 <span key={i} className="id-perk-tag">✓ {perk}</span>
@@ -144,23 +145,23 @@ const InternshipDetail = () => {
         {/* ── More Details ── */}
         {(intern.startdate || intern.numberofopenings || intern.additionalinfo) && (
           <div className="id-section">
-            <h2>Additional Details</h2>
+            <h2>{t("detail.additionalDetails")}</h2>
             <div className="id-detail-grid">
               {intern.startdate && (
                 <div className="id-detail-row">
-                  <span className="id-detail-label">Start Date</span>
+                  <span className="id-detail-label">{t("detail.startDate")}</span>
                   <span className="id-detail-value">{intern.startdate}</span>
                 </div>
               )}
               {intern.numberofopenings && (
                 <div className="id-detail-row">
-                  <span className="id-detail-label">Number of Openings</span>
+                  <span className="id-detail-label">{t("detail.numberOfOpenings")}</span>
                   <span className="id-detail-value">{intern.numberofopenings}</span>
                 </div>
               )}
               {intern.additionalinfo && (
                 <div className="id-detail-row" style={{ gridColumn: "1 / -1" }}>
-                  <span className="id-detail-label">Additional Info</span>
+                  <span className="id-detail-label">{t("detail.additionalInfo")}</span>
                   <span className="id-detail-value" style={{ fontWeight: 400, color: "#374151" }}>{intern.additionalinfo}</span>
                 </div>
               )}
@@ -171,7 +172,7 @@ const InternshipDetail = () => {
         {/* Bottom Apply CTA */}
         <div style={{ textAlign: "center", marginTop: 24 }}>
           <button className="id-apply-btn" onClick={() => setShowModal(true)} style={{ padding: "14px 48px", fontSize: "16px" }}>
-            Apply Now
+            {t("detail.applyNow")}
           </button>
         </div>
       </div>

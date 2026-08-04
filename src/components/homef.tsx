@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Mail, Sparkles, ArrowRight, UserCheck } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 import { Link } from "react-router-dom";
 import AuthModal from "./AuthModal/AuthModal";
 import { toast } from "react-toastify";
@@ -8,6 +9,7 @@ import "./HomeF.css";
 
 const Homef = () => {
   const { currentUser, loginWithGoogle } = useAuth();
+  const { t } = useLanguage();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authTab, setAuthTab] = useState<"login" | "register">("register");
 
@@ -32,13 +34,14 @@ const Homef = () => {
         <div className="home-left">
           <div className="home-header">
             <span className="home-badge">
-              <Sparkles size={16} /> #1 Career Platform
+              <Sparkles size={16} /> {t("home.badge")}
             </span>
             <h1>
-              India's <span className="highlight">#1</span> platform
+              {t("home.headline")} <span className="highlight">{t("home.highlight")}</span>{" "}
+              {t("home.subtitle")}
             </h1>
             <p className="home-subtitle">
-              For fresher jobs, internships and career development
+              {t("home.subtitle")}
             </p>
           </div>
 
@@ -48,22 +51,22 @@ const Homef = () => {
                 <div className="welcome-header">
                   <UserCheck size={24} color="#0ea5e9" />
                   <div>
-                    <h3>Welcome back, {currentUser.displayName || currentUser.email?.split("@")[0]}! 👋</h3>
-                    <p>You're logged in and ready to apply.</p>
+                    <h3>{t("home.welcomeBack")} {currentUser.displayName || currentUser.email?.split("@")[0]}! 👋</h3>
+                    <p>{t("home.loggedInReady")}</p>
                   </div>
                 </div>
                 <div className="welcome-actions">
                   <Link to="/profile" className="welcome-btn primary">
-                    My Profile & Applications <ArrowRight size={16} />
+                    {t("home.myProfile")} <ArrowRight size={16} />
                   </Link>
                   <Link to="/Job" className="welcome-btn secondary">
-                    Explore Jobs
+                    {t("home.exploreJobs")}
                   </Link>
                 </div>
               </div>
             ) : (
               <>
-                <h3>Candidate sign up</h3>
+                <h3>{t("home.candidateSignup")}</h3>
                 <div className="buttons-container">
                   <button
                     type="button"
@@ -94,7 +97,7 @@ const Homef = () => {
                         fill="#EA4335"
                       />
                     </svg>
-                    Continue with Google
+                    {t("home.continueGoogle")}
                   </button>
 
                   <button
@@ -103,12 +106,12 @@ const Homef = () => {
                     onClick={() => openAuth("register")}
                   >
                     <Mail size={20} />
-                    Continue with Email
+                    {t("home.continueEmail")}
                   </button>
                 </div>
                 <p className="agreement-text">
-                  By continuing as a candidate, you agree to our{" "}
-                  <span onClick={() => openAuth("register")}>T&C</span>.
+                  {t("home.agreement")}{" "}
+                  <span onClick={() => openAuth("register")}>{t("home.tc")}</span>.
                 </p>
               </>
             )}

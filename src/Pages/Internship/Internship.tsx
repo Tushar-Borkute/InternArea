@@ -5,6 +5,7 @@ import axios from "axios";
 import "./Internship.css";
 import NavBar from "../../components/navBar";
 import Breadcrumb from "../../components/Breadcrumb";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface Internship {
   _id: string;
@@ -21,6 +22,8 @@ interface Internship {
 }
 
 const InternshipPage = () => {
+  const { t } = useLanguage();
+
   const categories = [
     "Big brands",
     "Work from Home",
@@ -56,7 +59,7 @@ const InternshipPage = () => {
         setInternships(res.data);
       } catch (err) {
         console.error(err);
-        setError("Failed to load internships. Make sure the backend is running.");
+        setError(t("internPage.loadError"));
       } finally {
         setLoading(false);
       }
@@ -97,7 +100,7 @@ const InternshipPage = () => {
     return (
       <>
         <NavBar />
-        <Breadcrumb items={[{ label: "Home", path: "/" }, { label: "Internships" }]} />
+        <Breadcrumb items={[{ label: t("breadcrumb.home"), path: "/" }, { label: t("breadcrumb.internships") }]} />
         <main className="internship-page">
           <div
             style={{
@@ -113,7 +116,7 @@ const InternshipPage = () => {
             }}
           >
             <Loader2 size={40} style={{ animation: "spin 1s linear infinite" }} />
-            <p>Loading internships…</p>
+            <p>{t("internPage.loading")}</p>
           </div>
         </main>
       </>
@@ -124,7 +127,7 @@ const InternshipPage = () => {
     return (
       <>
         <NavBar />
-        <Breadcrumb items={[{ label: "Home", path: "/" }, { label: "Internships" }]} />
+        <Breadcrumb items={[{ label: t("breadcrumb.home"), path: "/" }, { label: t("breadcrumb.internships") }]} />
         <main className="internship-page">
           <div
             style={{
@@ -144,7 +147,7 @@ const InternshipPage = () => {
   return (
     <>
       <NavBar />
-      <Breadcrumb items={[{ label: "Home", path: "/" }, { label: "Internships" }]} />
+      <Breadcrumb items={[{ label: t("breadcrumb.home"), path: "/" }, { label: t("breadcrumb.internships") }]} />
       <main className="internship-page">
         <div className="internship-grid">
           <aside className={`internship-filter-panel${filterOpen ? " open" : ""}`}>
@@ -154,12 +157,12 @@ const InternshipPage = () => {
                   <Filter size={18} />
                 </div>
                 <div>
-                  <h2>Filter</h2>
+                  <h2>{t("internPage.filter")}</h2>
                 </div>
               </div>
 
               <div className="internship-filter-group">
-                <label className="internship-filter-label">Profile</label>
+                <label className="internship-filter-label">{t("internPage.profile")}</label>
                 <input
                   className="internship-filter-input"
                   type="text"
@@ -184,7 +187,7 @@ const InternshipPage = () => {
               </div>
 
               <div className="internship-filter-group">
-                <label className="internship-filter-label">Location</label>
+                <label className="internship-filter-label">{t("internPage.location")}</label>
                 <input
                   className="internship-filter-input"
                   type="text"
@@ -216,7 +219,7 @@ const InternshipPage = () => {
                       checked={checked}
                       onChange={() => setChecked(!checked)}
                     />
-                    Work from home
+                    {t("internPage.workFromHome")}
                   </label>
                   <label className="internship-checkbox-label">
                     <input
@@ -224,7 +227,7 @@ const InternshipPage = () => {
                       checked={pchecked}
                       onChange={() => setPchecked(!pchecked)}
                     />
-                    Part time
+                    {t("internPage.partTime")}
                   </label>
                 </div>
               </div>
@@ -232,7 +235,7 @@ const InternshipPage = () => {
               <div className="internship-filter-group">
                 <div className="internship-filter-group-row">
                   <p className="internship-filter-label">
-                    Desired minimum monthly stipend (₹)
+                    {t("internPage.minStipend")}
                   </p>
                 </div>
                 <input
@@ -261,7 +264,7 @@ const InternshipPage = () => {
 
               <div className="internship-filter-group">
                 <label className="internship-filter-label">
-                  Years of experience
+                  {t("internPage.yearsExperience")}
                 </label>
                 <input
                   className="internship-filter-input"
@@ -281,7 +284,7 @@ const InternshipPage = () => {
                   setSalary(0);
                 }}
               >
-                Clear filters
+                {t("internPage.clearFilters")}
               </button>
             </div>
           </aside>
@@ -294,17 +297,15 @@ const InternshipPage = () => {
               onClick={() => setFilterOpen((prev) => !prev)}
             >
               <Filter size={16} />
-              {filterOpen ? "Hide Filters" : "Show Filters"}
+              {filterOpen ? t("internPage.hideFilters") : t("internPage.showFilters")}
             </button>
 
             <div className="internship-header">
               <div>
                 <h1 className="internship-count">
-                  {filteredInternships.length} Internships
+                  {filteredInternships.length} {t("internPage.internships")}
                 </h1>
-                <p>
-                  Search and Apply to Latest Internship Vacancies &amp; Openings in India
-                </p>
+                <p>{t("internPage.searchApply")}</p>
               </div>
             </div>
 
@@ -319,7 +320,7 @@ const InternshipPage = () => {
                     fontSize: "15px",
                   }}
                 >
-                  No internships found matching your filters.
+                  {t("internPage.noFound")}
                 </div>
               ) : (
                 filteredInternships.map((intern) => (
@@ -329,7 +330,7 @@ const InternshipPage = () => {
                         <h3 className="internship-title">{intern.title}</h3>
                         <p className="internship-company">{intern.company}</p>
                       </div>
-                      <span className="internship-status">Actively hiring</span>
+                      <span className="internship-status">{t("internPage.activelyHiring")}</span>
                     </div>
 
                     <div className="internship-meta">
@@ -351,7 +352,7 @@ const InternshipPage = () => {
                         to={`/internship/${intern._id}`}
                         className="internship-apply-btn"
                       >
-                        Apply now
+                        {t("internPage.applyNow")}
                       </Link>
                     </div>
                   </article>

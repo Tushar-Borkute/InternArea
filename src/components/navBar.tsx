@@ -2,11 +2,14 @@ import { useState } from "react";
 import { Send, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 import AuthModal from "./AuthModal/AuthModal";
+import LanguageSelector from "./LanguageSelector/LanguageSelector";
 import "./navbar.css";
 
 const NavBar = () => {
   const { currentUser, logout } = useAuth();
+  const { t } = useLanguage();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authTab, setAuthTab] = useState<"login" | "register">("login");
 
@@ -29,10 +32,10 @@ const NavBar = () => {
 
           <div className="nav-links">
             <Link className="nav-link" to="/Job">
-              Jobs
+              {t("nav.jobs")}
             </Link>
             <Link className="nav-link" to="/Internship">
-              Internships
+              {t("nav.internships")}
             </Link>
           </div>
 
@@ -51,24 +54,26 @@ const NavBar = () => {
                     {currentUser.displayName || currentUser.email?.split("@")[0]}
                   </span>
                 </Link>
-                <button className="login-btn" onClick={() => logout()} title="Logout">
+                <button className="login-btn" onClick={() => logout()} title={t("nav.logout")}>
                   <LogOut size={16} />
                 </button>
               </div>
             ) : (
               <>
                 <button className="login-btn" onClick={() => openAuth("login")}>
-                  Login
+                  {t("nav.login")}
                 </button>
                 <button className="register-btn" onClick={() => openAuth("register")}>
-                  Register
+                  {t("nav.register")}
                 </button>
               </>
             )}
 
             <Link to="/Admin">
-              <button className="admin-btn">Admin</button>
+              <button className="admin-btn">{t("nav.admin")}</button>
             </Link>
+
+            <LanguageSelector />
           </div>
         </div>
       </nav>

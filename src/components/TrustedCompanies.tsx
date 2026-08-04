@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import "./TrustedCompanies.css";
 
 const logos = [
@@ -12,6 +13,7 @@ const logos = [
 ];
 
 const TrustedCompanies = () => {
+  const { t } = useLanguage();
   const repeatedLogos = [...logos, ...logos];
 
   return (
@@ -21,7 +23,7 @@ const TrustedCompanies = () => {
           <div className="trusted-companies__divider" aria-hidden="true" />
           <div className="trusted-companies__stats-text">
             <h2 className="trusted-companies__count">10K+</h2>
-            <p className="trusted-companies__label">Openings daily</p>
+            <p className="trusted-companies__label">{t("trusted.openingsDaily")}</p>
           </div>
         </div>
 
