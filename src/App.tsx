@@ -17,6 +17,9 @@ import Vapplication from "./Pages/ViewApplication/index";
 import JobDetail from "./Pages/JobDetail/JobDetail";
 import InternshipDetail from "./Pages/InternshipDetail/InternshipDetail";
 import Profile from "./Pages/Profile/Profile";
+import ResumeBuilder from "./Pages/ResumeBuilder/ResumeBuilder";
+import ResetPassword from "./Pages/ResetPassword/ResetPassword";
+import PublicSpace from "./Pages/PublicSpace/PublicSpace";
 
 // Inner component so it can use the language context hook
 const AppRoutes = () => {
@@ -32,6 +35,9 @@ const AppRoutes = () => {
         <Route path="/Internship" element={<Internship />} />
         <Route path="/internship/:id" element={<InternshipDetail />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/resume-builder" element={<ResumeBuilder />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/public-space" element={<PublicSpace />} />
         <Route path="/Admin" element={<Admin />} />
         <Route path="/adminPanel" element={<Padmin />} />
         <Route path="/postInternship" element={<Pinternship />} />

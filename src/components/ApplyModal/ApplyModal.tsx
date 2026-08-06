@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { X, FileCheck } from "lucide-react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
@@ -31,6 +31,34 @@ const ApplyModal = ({ jobId, jobTitle, company, type, onClose }: Props) => {
     coverLetter: "",
   });
   const [loading, setLoading] = useState(false);
+  const [attachedResume, setAttachedResume] = useState<any>(null);
+
+  useEffect(() => {
+    if (!userEmail) return;
+    const checkUserResume = async () => {
+      try {
+        const res = await axios.get(`${API_BASE_URL}/api/resume/user/${userEmail}`);
+        if (res.data?.success && res.data?.resume) {
+          const r = res.data.resume;
+          setAttachedResume(r);
+
+          // Auto-fill from attached profile resume
+          setForm((prev) => ({
+            ...prev,
+            name: r.name || prev.name,
+            phone: r.phone || prev.phone,
+            skills: r.skills?.join(", ") || prev.skills,
+            college: r.education?.[0]?.institution || prev.college,
+            degree: r.education?.[0]?.degree || prev.degree,
+            cgpa: r.education?.[0]?.score || prev.cgpa,
+          }));
+        }
+      } catch {
+        // No resume attached
+      }
+    };
+    checkUserResume();
+  }, [userEmail]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -52,8 +80,9 @@ const ApplyModal = ({ jobId, jobTitle, company, type, onClose }: Props) => {
         jobTitle,
         company,
         type,
+        attachedResumeId: attachedResume?._id || null,
       });
-      toast.success("Application submitted successfully! 🎉");
+      toast.success("Application submitted with attached candidate profile resume! 🎉");
       onClose();
     } catch {
       toast.error("Failed to submit application. Please try again.");
@@ -75,6 +104,14 @@ const ApplyModal = ({ jobId, jobTitle, company, type, onClose }: Props) => {
             <X size={20} />
           </button>
         </div>
+
+        {/* Attached Resume Banner */}
+        {attachedResume && (
+          <div className="resume-attached-alert">
+            <FileCheck size={18} color="#008bdc" />
+            <span><strong>Attached Profile Resume:</strong> Auto-filled from your active candidate resume.</span>
+          </div>
+        )}
 
         {/* Form */}
         <form className="modal-body" onSubmit={handleSubmit}>
@@ -134,7 +171,7 @@ const ApplyModal = ({ jobId, jobTitle, company, type, onClose }: Props) => {
           </div>
 
           {/* Footer */}
-          <div className="modal-footer" style={{ marginTop: "20px" }}>
+          <div className="modal-footer">
             <button type="button" className="modal-btn-cancel" onClick={onClose}>
               Cancel
             </button>

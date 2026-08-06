@@ -210,6 +210,20 @@
   to { transform: rotate(360deg); }
 }
 
+/* Attached Resume Banner in ApplyModal */
+.resume-attached-alert {
+  background: #f0f9ff;
+  border-left: 4px solid #008bdc;
+  padding: 10px 16px;
+  margin: 12px 24px 0 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: #0369a1;
+}
+
 /* Responsive */
 @media (max-width: 520px) {
   .modal-row { grid-template-columns: 1fr; }

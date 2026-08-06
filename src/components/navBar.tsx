@@ -37,6 +37,12 @@ const NavBar = () => {
             <Link className="nav-link" to="/Internship">
               {t("nav.internships")}
             </Link>
+            <Link className="nav-link public-space-nav-link" to="/public-space">
+              Public Space 🌐
+            </Link>
+            <Link className="nav-link resume-nav-link" to="/resume-builder">
+              Resume Builder <span className="nav-premium-tag">₹50</span>
+            </Link>
           </div>
 
           <div className="nav-actions">

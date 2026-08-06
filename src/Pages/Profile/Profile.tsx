@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/config";
-import { Mail, Calendar, Briefcase, CheckCircle2, Clock, XCircle, LogOut } from "lucide-react";
+import { Mail, Calendar, Briefcase, CheckCircle2, Clock, XCircle, LogOut, FileText, Sparkles, PlusCircle } from "lucide-react";
 import NavBar from "../../components/navBar";
 import Breadcrumb from "../../components/Breadcrumb";
 import "./Profile.css";
@@ -18,10 +18,20 @@ interface Application {
   appliedAt: string;
 }
 
+interface ResumeData {
+  _id: string;
+  name: string;
+  phone: string;
+  location: string;
+  isPaid: boolean;
+  updatedAt: string;
+}
+
 const Profile = () => {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
   const [applications, setApplications] = useState<Application[]>([]);
+  const [resume, setResume] = useState<ResumeData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,11 +40,20 @@ const Profile = () => {
       return;
     }
 
-    const fetchUserApps = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${API_BASE_URL}/api/application/user/${currentUser.email}`);
-        setApplications(res.data);
+        const [appRes, resumeRes] = await Promise.allSettled([
+          axios.get(`${API_BASE_URL}/api/application/user/${currentUser.email}`),
+          axios.get(`${API_BASE_URL}/api/resume/user/${currentUser.email}`),
+        ]);
+
+        if (appRes.status === "fulfilled") {
+          setApplications(appRes.value.data);
+        }
+        if (resumeRes.status === "fulfilled" && resumeRes.value.data?.resume) {
+          setResume(resumeRes.value.data.resume);
+        }
       } catch (err) {
         console.error(err);
       } finally {
@@ -43,7 +62,7 @@ const Profile = () => {
     };
 
     if (currentUser.email) {
-      fetchUserApps();
+      fetchData();
     }
   }, [currentUser, navigate]);
 
@@ -116,6 +135,43 @@ const Profile = () => {
           <button className="profile-logout-btn" onClick={handleLogout}>
             <LogOut size={16} /> Logout
           </button>
+        </div>
+
+        {/* Premium Resume Banner / Status Section */}
+        <div className="profile-section" style={{ marginBottom: "28px" }}>
+          <div className="section-header">
+            <h2>
+              <FileText size={20} /> Candidate Profile Resume (Premium)
+            </h2>
+          </div>
+
+          {resume && resume.isPaid ? (
+            <div className="resume-attached-box">
+              <div>
+                <div className="resume-attached-title">
+                  <CheckCircle2 size={18} color="#0284c7" /> Active Premium Resume Attached
+                </div>
+                <p className="resume-attached-sub">
+                  Last updated: {formatDate(resume.updatedAt)} · Automatically linked to your internship applications.
+                </p>
+              </div>
+
+              <Link to="/resume-builder" className="resume-edit-link">
+                <FileText size={16} /> View / Edit Resume
+              </Link>
+            </div>
+          ) : (
+            <div className="resume-prompt-box">
+              <Sparkles size={28} color="#0ea5e9" style={{ marginBottom: "8px" }} />
+              <h3 className="resume-prompt-title">No Premium Resume Attached</h3>
+              <p className="resume-prompt-desc">
+                Build an ATS-standard resume for ₹50 with Email OTP verification and Razorpay payment.
+              </p>
+              <Link to="/resume-builder" className="resume-create-link">
+                <PlusCircle size={18} /> Create Resume (₹50)
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* Applications Section */}

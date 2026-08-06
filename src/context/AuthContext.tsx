@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
+  updatePassword,
   updateProfile,
   signOut,
   onAuthStateChanged,
@@ -48,7 +49,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const loginWithEmail = async (email: string, pass: string) => {
-    await signInWithEmailAndPassword(auth, email, pass);
+    const resetPass = localStorage.getItem(`candidate_pass_${email.toLowerCase()}`);
+    const oldPass = localStorage.getItem(`candidate_old_pass_${email.toLowerCase()}`);
+
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+    } catch (err: any) {
+      // If user reset their password on the site, handle Firebase auth fallback & password sync
+      if (resetPass && resetPass === pass) {
+        try {
+          if (oldPass) {
+            const res = await signInWithEmailAndPassword(auth, email, oldPass);
+            if (res.user) {
+              await updatePassword(res.user, pass);
+              return;
+            }
+          }
+          const res = await createUserWithEmailAndPassword(auth, email, pass);
+          if (res.user) return;
+        } catch {
+          throw err;
+        }
+      } else {
+        throw err;
+      }
+    }
   };
 
   const registerWithEmail = async (email: string, pass: string, name: string) => {
@@ -56,6 +81,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (res.user && name) {
       await updateProfile(res.user, { displayName: name });
     }
+    localStorage.setItem(`candidate_pass_${email.toLowerCase()}`, pass);
   };
 
   const resetPassword = async (email: string) => {

@@ -253,6 +253,23 @@
   box-shadow: none;
 }
 
+.password-toggle-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.18s ease;
+  flex-shrink: 0;
+}
+
+.password-toggle-btn:hover {
+  color: #0ea5e9;
+}
+
 /* Remove WebKit/Browser autofill dark/gray box background completely */
 .input-wrapper input:-webkit-autofill,
 .input-wrapper input:-webkit-autofill:hover,

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { X, Mail, Lock, User, LogIn, Phone, GraduationCap, ArrowLeft, KeyRound } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { X, Mail, Lock, User, LogIn, Phone, GraduationCap, ArrowLeft, KeyRound, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 import "./AuthModal.css";
@@ -11,12 +12,15 @@ interface AuthModalProps {
 }
 
 const AuthModal = ({ isOpen, onClose, initialTab = "login" }: AuthModalProps) => {
+  const navigate = useNavigate();
   const [tab, setTab] = useState<"login" | "register">(initialTab);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [college, setCollege] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const [isResetting, setIsResetting] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -89,14 +93,18 @@ const AuthModal = ({ isOpen, onClose, initialTab = "login" }: AuthModalProps) =>
       } else {
         await registerWithEmail(email, password, name);
         // Store extra profile details locally for application pre-fill
-        localStorage.setItem(`candidate_phone_${email}`, phone);
-        if (college) localStorage.setItem(`candidate_college_${email}`, college);
+        localStorage.setItem(`candidate_phone_${email.toLowerCase()}`, phone);
+        if (college) localStorage.setItem(`candidate_college_${email.toLowerCase()}`, college);
         toast.success("Account created successfully! 🎉");
       }
       onClose();
     } catch (err: any) {
       console.error(err);
-      toast.error(err.message || "Authentication failed");
+      let errText = err.message || "Authentication failed";
+      if (errText.includes("auth/invalid-credential") || errText.includes("auth/wrong-password")) {
+        errText = "Incorrect password or email. Please check your password or reset it.";
+      }
+      toast.error(errText);
     } finally {
       setLoading(false);
     }
@@ -265,7 +273,10 @@ const AuthModal = ({ isOpen, onClose, initialTab = "login" }: AuthModalProps) =>
                       <button
                         type="button"
                         className="forgot-pass-link"
-                        onClick={() => setIsResetting(true)}
+                        onClick={() => {
+                          onClose();
+                          navigate("/reset-password");
+                        }}
                       >
                         Forgot password?
                       </button>
@@ -274,12 +285,20 @@ const AuthModal = ({ isOpen, onClose, initialTab = "login" }: AuthModalProps) =>
                   <div className="input-wrapper">
                     <Lock size={18} />
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
                     />
+                    <button
+                      type="button"
+                      className="password-toggle-btn"
+                      onClick={() => setShowPassword(!showPassword)}
+                      title={showPassword ? "Hide password" : "Show password"}
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
                   </div>
                 </div>
 
