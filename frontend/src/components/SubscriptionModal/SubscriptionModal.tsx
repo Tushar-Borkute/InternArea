@@ -18,7 +18,7 @@ export const SubscriptionModal = ({ isOpen, onClose, onSubscriptionUpdated }: Pr
 
   const [activeSub, setActiveSub] = useState<any>(null);
   const [isWindowOpen, setIsWindowOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+
   const [processingPlan, setProcessingPlan] = useState<string | null>(null);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const SubscriptionModal = ({ isOpen, onClose, onSubscriptionUpdated }: Pr
 
   if (!isOpen) return null;
 
-  const handleSubscribe = async (planName: string, price: number) => {
+  const handleSubscribe = async (planName: string, _price: number) => {
     if (!userEmail) {
       toast.error("Please login to subscribe to a plan.");
       return;
