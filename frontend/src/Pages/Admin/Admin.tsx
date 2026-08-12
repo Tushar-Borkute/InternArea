@@ -40,6 +40,10 @@ const Admin = () => {
         }
     };
 
+    const fillDemoCredentials = () => {
+        setLogin({ username: "Tushar", password: "Tushar" });
+    };
+
     return (
         <div className="admin-page">
             <div className="admin-card">
@@ -52,6 +56,25 @@ const Admin = () => {
                     </div>
                     <h1>Admin Dashboard</h1>
                     <p>Manage your jobs, internships and applications</p>
+                </div>
+
+                {/* Demo Credentials Box for Evaluators */}
+                <div className="demo-credentials" onClick={fillDemoCredentials} title="Click to auto-fill credentials">
+                    <div className="demo-credentials-header">
+                        <span className="demo-badge">🔑 Demo Credentials</span>
+                        <span className="demo-click-hint">Click to auto-fill</span>
+                    </div>
+                    <div className="demo-credentials-body">
+                        <div className="demo-field">
+                            <span className="demo-label">Username</span>
+                            <span className="demo-value">Tushar</span>
+                        </div>
+                        <div className="demo-divider-dot">•</div>
+                        <div className="demo-field">
+                            <span className="demo-label">Password</span>
+                            <span className="demo-value">Tushar</span>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Form */}
