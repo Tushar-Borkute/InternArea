@@ -1,0 +1,260 @@
+.sub-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.sub-modal-card {
+  background: #ffffff;
+  border-radius: 20px;
+  max-width: 960px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 32px 28px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid #e2e8f0;
+}
+
+.sub-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #f1f5f9;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sub-modal-close:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.sub-modal-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.sub-modal-icon {
+  width: 56px;
+  height: 56px;
+  background: #f0f9ff;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+
+.sub-modal-header h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 6px;
+}
+
+.sub-modal-header p {
+  color: #64748b;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Payment Window Banner */
+.sub-window-banner {
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 28px;
+  font-size: 13.5px;
+}
+
+.sub-window-banner p {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+}
+
+.banner-open {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+
+.banner-closed {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #9f1239;
+}
+
+/* Plans Grid */
+.sub-plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+}
+
+.plan-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 22px 18px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.plan-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.1);
+  border-color: #cbd5e1;
+}
+
+.plan-card.active-plan {
+  border: 2px solid #0ea5e9;
+  background: #f0f9ff;
+}
+
+.gold-card {
+  border: 2px solid #f59e0b;
+  background: linear-gradient(180deg, #fffbeb 0%, #ffffff 100%);
+}
+
+.active-badge {
+  position: absolute;
+  top: -12px;
+  right: 16px;
+  background: #0ea5e9;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.popular-badge {
+  position: absolute;
+  top: -12px;
+  left: 16px;
+  background: #f59e0b;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.plan-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.plan-header h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.plan-price {
+  margin-bottom: 18px;
+}
+
+.plan-price .amount {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.plan-price .period {
+  font-size: 13px;
+  color: #64748b;
+  margin-left: 2px;
+}
+
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  font-size: 13px;
+  color: #334155;
+}
+
+.plan-features li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.plan-btn {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.plan-btn.disabled {
+  background: #e2e8f0;
+  color: #64748b;
+  cursor: default;
+}
+
+.bronze-btn {
+  background: #d97706;
+  color: #ffffff;
+}
+
+.bronze-btn:hover:not(:disabled) {
+  background: #b45309;
+}
+
+.silver-btn {
+  background: #0ea5e9;
+  color: #ffffff;
+}
+
+.silver-btn:hover:not(:disabled) {
+  background: #0284c7;
+}
+
+.gold-btn {
+  background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
+}
+
+.gold-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ca8a04 0%, #a16207 100%);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}

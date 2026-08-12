@@ -1,0 +1,256 @@
+/* ============================================================
+   View Applications Page — matches Admin Panel style
+   Background: #f0f2f5  |  Cards: #ffffff  |  Font: Inter
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ── Page Wrapper ── */
+.viewapplication-page {
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    padding: 32px 40px;
+}
+
+/* ── Header ── */
+.viewapplication-header {
+    margin-bottom: 24px;
+}
+
+.viewapplication-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 4px 0;
+}
+
+.viewapplication-header p {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* ── Toolbar: Search + Filters ── */
+.viewapplication-toolbar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.viewapplication-search {
+    flex: 1;
+    min-width: 200px;
+    max-width: 340px;
+    padding: 10px 16px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    color: #111827;
+    background: #ffffff;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.viewapplication-search:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.viewapplication-search::placeholder {
+    color: #9ca3af;
+}
+
+.viewapplication-select {
+    padding: 10px 36px 10px 14px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    color: #374151;
+    background: #ffffff;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+}
+
+.viewapplication-select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ── Table Wrapper ── */
+.viewapplication-table-wrapper {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    overflow-x: auto;
+    margin-bottom: 20px;
+    border: 1px solid #f3f4f6;
+}
+
+/* ── Table ── */
+.viewapplication-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.viewapplication-table thead tr {
+    background: #f9fafb;
+    border-bottom: 1.5px solid #e5e7eb;
+}
+
+.viewapplication-table th {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* Sr. No column — centered */
+.viewapplication-table th:nth-child(1),
+.viewapplication-table td:nth-child(1) {
+    text-align: center;
+    width: 80px;
+}
+
+/* View button column — centered */
+.viewapplication-table th:nth-child(6),
+.viewapplication-table td:nth-child(6) {
+    text-align: center;
+    width: 140px;
+}
+
+.viewapplication-table tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+    transition: background 0.15s;
+}
+
+.viewapplication-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.viewapplication-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+.viewapplication-table td {
+    padding: 14px 18px;
+    color: #111827;
+    vertical-align: middle;
+    text-align: left;
+}
+
+.va-name {
+    font-weight: 600;
+    color: #111827;
+}
+
+/* ── Empty State ── */
+.viewapplication-empty {
+    text-align: center;
+    color: #9ca3af;
+    padding: 40px !important;
+    font-size: 15px;
+}
+
+/* ── Status Badges ── */
+.va-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.badge-yellow {
+    color: #d97706;
+    background: #fef3c7;
+}
+
+.badge-green {
+    color: #16a34a;
+    background: #dcfce7;
+}
+
+.badge-red {
+    color: #dc2626;
+    background: #fee2e2;
+}
+
+.badge-blue {
+    color: #2563eb;
+    background: #dbeafe;
+}
+
+/* ── View Button ── */
+.va-view-btn {
+    padding: 6px 18px;
+    background: #3b82f6;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.va-view-btn:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+}
+
+/* ── Pagination ── */
+.viewapplication-pagination {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.viewapplication-pagination button {
+    padding: 9px 22px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    background: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+}
+
+.viewapplication-pagination button:hover {
+    background: #f9fafb;
+    border-color: #3b82f6;
+    color: #3b82f6;
+    transform: translateY(-1px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+    .viewapplication-page {
+        padding: 20px 16px;
+    }
+
+    .viewapplication-search {
+        max-width: 100%;
+    }
+}

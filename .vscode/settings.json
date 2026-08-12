@@ -1,0 +1,16 @@
+{
+  "typescript.tsdk": "./internarea/node_modules/typescript/lib",
+  "typescript.disableAutomaticTypeAcquisition": false,
+  "typescript.suggest.enabled": true,
+  "javascript.suggest.enabled": true,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  "editor.suggest.showWords": true,
+  "editor.suggest.showSnippets": true,
+  "editor.suggestSelection": "recentlyUsedByPrefix",
+  "editor.acceptSuggestionOnEnter": "on",
+  "editor.tabCompletion": "on"
+}

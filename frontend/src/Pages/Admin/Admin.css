@@ -1,0 +1,282 @@
+/* ============================================================
+   Admin Login Page Styles
+   Palette: White card · #083d7a dark blue bg · #0ea5e9 sky blue
+            #8b5cf6 purple · #10b981 green accents
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ── Page Wrapper ── */
+.admin-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1f5f9;
+    padding: 100px 16px 40px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ── Animated background orbs ── */
+.admin-page::before,
+.admin-page::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.28;
+    animation: float 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.admin-page::before {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(14,165,233,0.18), rgba(139,92,246,0.1), transparent);
+    top: -100px;
+    right: -80px;
+    animation-delay: 0s;
+}
+
+.admin-page::after {
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(16,185,129,0.15), rgba(8,61,122,0.08), transparent);
+    bottom: -80px;
+    left: -60px;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50%       { transform: translateY(-22px) scale(1.06); }
+}
+
+/* ── WHITE Card ── */
+.admin-card {
+    position: relative;
+    z-index: 1;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 52px 48px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.08),
+        0 2px 12px rgba(0, 0, 0, 0.04);
+    animation: slideUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    border: 1px solid #e2e8f0;
+}
+
+
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(36px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Header ── */
+.admin-header {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.admin-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 66px;
+    height: 66px;
+    background: #0ea5e9;
+    border-radius: 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 16px rgba(14, 165, 233, 0.25);
+    animation: iconPop 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+@keyframes iconPop {
+    from { opacity: 0; transform: scale(0.7) rotate(-10deg); }
+    to   { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+.admin-icon svg {
+    width: 30px;
+    height: 30px;
+    fill: #ffffff;
+}
+
+.admin-header h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+}
+
+.admin-header p {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* ── Form ── */
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.admin-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.admin-form-group label {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #374151;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Colored dot before each label */
+.admin-form-group:nth-child(1) label::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #0ea5e9;
+    flex-shrink: 0;
+}
+
+.admin-form-group:nth-child(2) label::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #8b5cf6;
+    flex-shrink: 0;
+}
+
+.admin-form-group input {
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-size: 15px;
+    color: #0f172a;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+.admin-form-group input::placeholder {
+    color: #94a3b8;
+}
+
+.admin-form-group:nth-child(1) input:focus {
+    border-color: #0ea5e9;
+    background: #f0f9ff;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+.admin-form-group:nth-child(2) input:focus {
+    border-color: #8b5cf6;
+    background: #faf5ff;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+/* ── Sign-in button ── */
+.admin-signin-btn {
+    margin-top: 10px;
+    padding: 15px;
+    background: #0ea5e9;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    letter-spacing: 0.4px;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 14px rgba(14, 165, 233, 0.3);
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* Shimmer sweep */
+.admin-signin-btn::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.5s ease;
+}
+
+.admin-signin-btn:hover::after {
+    left: 160%;
+}
+
+.admin-signin-btn:hover {
+    background: #0284c7;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(14, 165, 233, 0.35);
+}
+
+.admin-signin-btn:active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ── Divider ── */
+.admin-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 4px 0;
+}
+
+.admin-divider span {
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+}
+
+.admin-divider p {
+    font-size: 12px;
+    color: #94a3b8;
+    margin: 0;
+    white-space: nowrap;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+    .admin-card {
+        padding: 38px 24px 32px;
+    }
+
+    .admin-header h1 {
+        font-size: 22px;
+    }
+
+    .admin-icon {
+        width: 56px;
+        height: 56px;
+    }
+}
