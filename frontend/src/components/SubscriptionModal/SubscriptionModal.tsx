@@ -26,7 +26,6 @@ export const SubscriptionModal = ({ isOpen, onClose, onSubscriptionUpdated }: Pr
 
     const fetchSub = async () => {
       try {
-        setLoading(true);
         const res = await axios.get(`${API_BASE_URL}/api/subscription/${userEmail}`);
         if (res.data?.success) {
           setActiveSub(res.data.subscription);
@@ -34,8 +33,6 @@ export const SubscriptionModal = ({ isOpen, onClose, onSubscriptionUpdated }: Pr
         }
       } catch (err) {
         console.error("Failed to fetch subscription:", err);
-      } finally {
-        setLoading(false);
       }
     };
 
