@@ -31,7 +31,7 @@ const Vapplication = () => {
   useEffect(() => {
     const fetchApp = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/application/${id}`);
+        const res = await axios.get(`https://internarea-2.onrender.com/api/application/${id}`);
         setApp(res.data);
       } catch {
         setApp(null);
@@ -47,7 +47,7 @@ const Vapplication = () => {
     try {
       setUpdating(true);
       const res = await axios.patch(
-        `http://localhost:5000/api/application/${app._id}/status`,
+        `https://internarea-2.onrender.com/api/application/${app._id}/status`,
         { status }
       );
       setApp(res.data);

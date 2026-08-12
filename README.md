@@ -130,7 +130,7 @@ cp .env.example .env
 Start the backend server:
 ```bash
 npm start
-# Server runs on http://localhost:5000
+# Server runs on https://internarea-2.onrender.com
 ```
 
 ### 3. Setup the Frontend
@@ -210,7 +210,7 @@ The platform enforces the following environment-based login security rules:
 
 ## 📡 API Overview
 
-Base URL: `http://localhost:5000/api`
+Base URL: `https://internarea-2.onrender.com/api`
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|

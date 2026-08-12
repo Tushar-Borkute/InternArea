@@ -36,7 +36,7 @@ const InternshipDetail = () => {
     const fetchIntern = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`http://localhost:5000/api/internship/${id}`);
+        const res = await axios.get(`https://internarea-2.onrender.com/api/internship/${id}`);
         setIntern(res.data);
       } catch {
         setError(t("detail.notFound"));

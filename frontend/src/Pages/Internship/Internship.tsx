@@ -55,7 +55,7 @@ const InternshipPage = () => {
       try {
         setLoading(true);
         setError(null);
-        const res = await axios.get("http://localhost:5000/api/internship");
+        const res = await axios.get("https://internarea-2.onrender.com/api/internship");
         setInternships(res.data);
       } catch (err) {
         console.error(err);

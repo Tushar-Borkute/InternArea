@@ -40,7 +40,7 @@ const Pinternship = () => {
 
         try {
             setisloading(true);
-            await axios.post("http://localhost:5000/api/internship/", intern);
+            await axios.post("https://internarea-2.onrender.com/api/internship/", intern);
             toast.success("Internship posted successfully!");
             navigate("/adminPanel");
         } catch (error) {

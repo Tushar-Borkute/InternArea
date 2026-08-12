@@ -29,7 +29,7 @@ const Admin = () => {
 
         try {
             setisloading(true);
-            await axios.post("http://localhost:5000/api/admin/adminlogin", login);
+            await axios.post("https://internarea-2.onrender.com/api/admin/adminlogin", login);
             toast.success("Logged in successfully");
             navigate("/adminPanel");
         } catch (error) {

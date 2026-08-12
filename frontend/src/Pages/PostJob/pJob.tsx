@@ -40,7 +40,7 @@ const Pjob = () => {
 
         try {
             setisloading(true);
-            await axios.post("http://localhost:5000/api/job/", job);
+            await axios.post("https://internarea-2.onrender.com/api/job/", job);
             toast.success("Job posted successfully!");
             navigate("/adminPanel");
         } catch (error) {

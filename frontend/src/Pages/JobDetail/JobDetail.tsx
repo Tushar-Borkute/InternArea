@@ -36,7 +36,7 @@ const JobDetail = () => {
     const fetchJob = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`http://localhost:5000/api/job/${id}`);
+        const res = await axios.get(`https://internarea-2.onrender.com/api/job/${id}`);
         setJob(res.data);
       } catch {
         setError(t("detail.notFound"));

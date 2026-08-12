@@ -26,7 +26,7 @@ const ViewApplication = () => {
   useEffect(() => {
     const fetchApps = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/application");
+        const res = await axios.get("https://internarea-2.onrender.com/api/application");
         setApplications(res.data);
       } catch (err) {
         console.error(err);

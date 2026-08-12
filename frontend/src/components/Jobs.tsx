@@ -28,7 +28,7 @@ interface Internship {
   numberofopenings?: string;
 }
 
-const API = "http://localhost:5000/api";
+const API = "https://internarea-2.onrender.com/api";
 
 const Jobs = () => {
   const { t } = useLanguage();
