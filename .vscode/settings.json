@@ -12,5 +12,12 @@
   "editor.suggest.showSnippets": true,
   "editor.suggestSelection": "recentlyUsedByPrefix",
   "editor.acceptSuggestionOnEnter": "on",
-  "editor.tabCompletion": "on"
+  "editor.tabCompletion": "on",
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/build/**": true
+  }
 }
