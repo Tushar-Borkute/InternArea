@@ -1,0 +1,248 @@
+/* ============================================================
+   Post Job Page Styles
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+.pjob-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background: #f1f5f9;
+    padding: 100px 16px 60px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    position: relative;
+}
+
+.pjob-page::before,
+.pjob-page::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.28;
+    animation: pjobFloat 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.pjob-page::before {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(16,185,129,0.18), rgba(99,102,241,0.1), transparent);
+    top: -100px;
+    right: -80px;
+    animation-delay: 0s;
+}
+
+.pjob-page::after {
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(14,165,233,0.15), rgba(8,61,122,0.08), transparent);
+    bottom: -80px;
+    left: -60px;
+    animation-delay: 4s;
+}
+
+@keyframes pjobFloat {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50%       { transform: translateY(-22px) scale(1.06); }
+}
+
+.pjob-card {
+    position: relative;
+    z-index: 1;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 48px 48px 52px;
+    width: 100%;
+    max-width: 900px;
+    box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.08),
+        0 2px 12px rgba(0, 0, 0, 0.04);
+    animation: pjobSlideUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    border: 1px solid #e2e8f0;
+}
+
+@keyframes pjobSlideUp {
+    from { opacity: 0; transform: translateY(36px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.pjob-header {
+    margin-bottom: 36px;
+}
+
+.pjob-header h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 6px;
+    letter-spacing: -0.5px;
+}
+
+.pjob-header p {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.pjob-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.pjob-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.pjob-row-full {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.pjob-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pjob-form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.pjob-form-group label .field-icon {
+    font-size: 15px;
+    line-height: 1;
+}
+
+.required-star {
+    color: #ef4444;
+    margin-left: 1px;
+}
+
+.pjob-form-group textarea {
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-size: 14.5px;
+    color: #0f172a;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    resize: vertical;
+    min-height: 48px;
+    line-height: 1.5;
+}
+
+.pjob-form-group textarea.short {
+    min-height: 48px;
+    max-height: 80px;
+    resize: none;
+    overflow: hidden;
+}
+
+.pjob-form-group textarea.medium {
+    min-height: 110px;
+}
+
+.pjob-form-group textarea::placeholder {
+    color: #94a3b8;
+}
+
+.pjob-form-group textarea:focus {
+    border-color: #10b981;
+    background: #f0fdf4;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+.pjob-form-group input[type="date"] {
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-size: 14.5px;
+    color: #0f172a;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    min-height: 48px;
+}
+
+.pjob-form-group input[type="date"]:focus {
+    border-color: #10b981;
+    background: #f0fdf4;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+.pjob-submit-btn {
+    margin-top: 8px;
+    padding: 15px;
+    background: linear-gradient(135deg, #10b981, #6366f1);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    letter-spacing: 0.4px;
+    transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+.pjob-submit-btn::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.5s ease;
+}
+
+.pjob-submit-btn:hover::after {
+    left: 160%;
+}
+
+.pjob-submit-btn:hover {
+    opacity: 0.92;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+}
+
+.pjob-submit-btn:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+    .pjob-card {
+        padding: 36px 20px 40px;
+    }
+
+    .pjob-row {
+        grid-template-columns: 1fr;
+    }
+
+    .pjob-header h1 {
+        font-size: 22px;
+    }
+}
